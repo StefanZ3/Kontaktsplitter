@@ -1,0 +1,1 @@
+DEFAULT_TITLES = ['Dr.', 'Professor', 'Professorin']

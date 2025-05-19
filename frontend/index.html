@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <title>Kontaktsplitter</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!--<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />-->
+</head>
+<body>
+    <div class="container">
+        <div class="row m-3 text-center">
+            <h1 id="heading">Kontaktsplitter</h1>
+        </div>
+        <div class="row">
+            <div class="col-8">
+                <div class="contact-container">
+                    <h3>Kontakt zerlegen</h3>
+                    <form class="row g-1 mt-1" method="post">
+                        <div class="col-6">
+                            <div class="input-group mb-3">
+                                <span class="input-group-text">Kontakt</span>
+                                <input type="text" class="form-control" name="input-string">
+                            </div>
+                        </div>
+                        <div class="col-auto">
+                            <button type="submit" class="btn btn-primary" name="action" value="add-contact">Zerlegen</button>
+                        </div>
+                    </form>
+                    <div class="splitted-result">
+                    {% if result %}
+                        {{ result }}
+                    {% endif %}
+                    </div>
+                </div>
+            </div>
+            <div class="col-4">
+                <div class="title-container">
+                    <h3>Neuer Titel hinzufügen</h3>
+                    <form method="post">
+                        <div class="input-group mb-2">
+                            <label class="input-group-text" for="new-title">Titel</label>
+                            <input type="text" class="form-control" id="new-title" name="new-title" required>
+                        </div>
+                        <div class="input-group mb-2">
+                            <label class="input-group-text" for="gender">Geschlecht</label>
+                            <select class="form-select" id="gender" required>
+                                <option value="" disabled selected>Auswählen...</option>
+                                <option value="1">Männlich</option>
+                                <option value="2">Weiblich</option>
+                                <option value="3">Divers</option>
+                            </select>
+                        </div>
+                        <div class="form-group mb-4">
+                            <button type="submit" class="btn btn-primary" name="action" value="add-title">Hinzufügen</button>
+                        </div>
+                    </form>
+                    <h3>Alle Titel</h3>
+                    {% for title in titles %}
+                        {{ title }} <br>
+                    {% else %}
+                        Keine Titel vorhanden.
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
