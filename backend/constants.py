@@ -1,1 +1,18 @@
-DEFAULT_TITLES = ['Dr.', 'Professor', 'Professorin']
+TITEL_METADATA = {
+    "Dr.": {"geschlecht": "unisex", "nationalitaet": "DE"},
+    "Prof.": {"geschlecht": "unisex", "nationalitaet": "DE"},
+    "Professor": {"geschlecht": "männlich", "nationalitaet": "DE"},
+    "Professorin": {"geschlecht": "weiblich", "nationalitaet": "DE"},
+    "Dipl.-Ing.": {"geschlecht": "unisex", "nationalitaet": "DE"},
+    "Herr": {"geschlecht": "männlich", "nationalitaet": "DE"},
+    "Frau": {"geschlecht": "weiblich", "nationalitaet": "DE"},
+    "Mrs.": {"geschlecht": "weiblich", "nationalitaet": "EN"},
+    "Mr.": {"geschlecht": "männlich", "nationalitaet": "EN"},
+    "Mme.": {"geschlecht": "weiblich", "nationalitaet": "FR"},
+    "M.": {"geschlecht": "männlich", "nationalitaet": "FR"},
+    "Señor": {"geschlecht": "männlich", "nationalitaet": "ES"},
+    "Señora": {"geschlecht": "weiblich", "nationalitaet": "ES"},
+    "Dr.-Ing.": {"geschlecht": "unisex", "nationalitaet": "DE"},
+    "Dr. h.c. mult.": {"geschlecht": "unisex", "nationalitaet": "DE"},
+    "Freiherr": {"geschlecht": "männlich", "nationalitaet": "DE"}
+}

@@ -25,12 +25,7 @@
                         <div class="col-auto">
                             <button type="submit" class="btn btn-primary" name="action" value="add-contact">Zerlegen</button>
                         </div>
-                    </form>
-                    <div class="splitted-result">
-                    {% if result %}
-                        {{ result }}
-                    {% endif %}
-                    </div>
+                    </form>                    
                 </div>
             </div>
             <div class="col-4">
@@ -43,8 +38,8 @@
                         </div>
                         <div class="input-group mb-2">
                             <label class="input-group-text" for="gender">Geschlecht</label>
-                            <select class="form-select" id="gender" required>
-                                <option value="" disabled selected>Auswählen...</option>
+                            <select class="form-select" id="gender" name="gender" required>
+                                <option value="" disabled selected hidden>Auswählen...</option>
                                 <option value="1">Männlich</option>
                                 <option value="2">Weiblich</option>
                                 <option value="3">Divers</option>
@@ -54,15 +49,37 @@
                             <button type="submit" class="btn btn-primary" name="action" value="add-title">Hinzufügen</button>
                         </div>
                     </form>
-                    <h3>Alle Titel</h3>
-                    {% for title in titles %}
-                        {{ title }} <br>
-                    {% else %}
-                        Keine Titel vorhanden.
-                    {% endfor %}
                 </div>
             </div>
         </div>
     </div>
+
+<h4>Gespeicherte Kontakte</h4>
+<div class="row">
+    <!-- Kontakte -->
+    <div class="col-md-8">
+        <div class="list-group">
+                        </form>
+                    <div class="splitted-result">
+                    {% if result %}
+                        {{ result }} <br>
+                    {% else %}
+                    <p>Keine Kontakte gespeichert.</p>
+                    {% endif %}
+                    </div>
+        </div>
+    </div>
+        <!-- Titel -->
+    <div class="col-md-4">
+        <h5>Alle Titel</h5>
+        <div class="border rounded p-2 bg-light">
+            {% for title in titles %}
+                {{ title }} <br>
+            {% else %}
+                Keine Titel vorhanden.
+            {% endfor %}
+        </div>
+    </div>
+</div>
 </body>
 </html>
