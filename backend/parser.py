@@ -14,12 +14,12 @@ class ContactParser:
     def get_gender(self, input_contact: str) -> Tuple[str, str | None]:
         gender = None
         if input_contact.startswith("Herr"):
-            gender = "männlich"
+            gender = "m"
             # Anrede entferen
             input_contact = input_contact[4:]
             return
         elif input_contact.startswith("Frau"):
-            gender = "weiblich"
+            gender = "w"
             # Anrede entfernen
             input_contact = input_contact[4:]
         return input_contact, gender
