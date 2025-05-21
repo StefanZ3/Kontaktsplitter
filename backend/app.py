@@ -22,12 +22,14 @@ def index():
             input_string = request.form.get("input-string")
             if input_string:
                 result = input_string
+                #result = parser.parse(input_string)
 
-        if action == "add-title":
-            new_title = request.form.get("new-title")
-            if new_title:
-                title_manager.add_title(new_title)
-
+        if action == 'add-title':
+            new_title = request.form.get('new-title')
+            gender = request.form.get('gender')
+            if new_title and gender:
+                title_manager.add_title(new_title, gender)
+      
         # parsedNumber = parser.parse(number_input)
         # formatter = ContentFormatter()
     return render_template(
