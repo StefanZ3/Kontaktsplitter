@@ -7,9 +7,10 @@ template_dir = os.path.abspath(
     os.path.join(os.path.dirname(__file__), "..", "frontend")
 )
 app = Flask(__name__, template_folder=template_dir)
+
 title_manager = TitleManager()
 parser = ContactParser(title_manager)
-
+contacts = []
 
 @app.route("/", methods=["GET", "POST"])
 def index():
@@ -21,12 +22,12 @@ def index():
         if action == "add-contact":
             input_string = request.form.get("input-string")
             if input_string:
-                result = input_string
-                #result = parser.parse(input_string)
+                result = input_string.strip()
+                contacts.append(result)  # Kontakt speichern
 
-        if action == 'add-title':
-            new_title = request.form.get('new-title')
-            gender = request.form.get('gender')
+        elif action == "add-title":
+            new_title = request.form.get("new-title")
+            gender = request.form.get("gender")
             if new_title and gender:
                 title_manager.add_title(new_title, gender)
       
@@ -36,7 +37,14 @@ def index():
         "index.html",
         result=result,
         titles=title_manager.titles,
+        contacts=contacts
     )
+#Brief Anrede
+@app.route("/briefanrede/<int:index>")
+def briefanrede(index):
+    contact = contacts[index]
+    anrede = f"Sehr geehrte(r) {contact}"  # Beispieltext
+    return anrede
 
 
 if __name__ == "__main__":
