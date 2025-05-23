@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, redirect, url_for
 from .title_manager import TitleManager
 from .parser import ContactParser
 import os
@@ -7,6 +7,7 @@ template_dir = os.path.abspath(
     os.path.join(os.path.dirname(__file__), "..", "frontend")
 )
 app = Flask(__name__, template_folder=template_dir)
+app.secret_key = "super-secret-key"
 
 title_manager = TitleManager()
 parser = ContactParser(title_manager)
@@ -30,6 +31,8 @@ def index():
             gender = request.form.get("gender")
             if new_title and gender:
                 title_manager.add_title(new_title, gender)
+
+        return redirect(url_for("index"))
       
         # parsedNumber = parser.parse(number_input)
         # formatter = ContentFormatter()
@@ -45,7 +48,6 @@ def briefanrede(index):
     contact = contacts[index]
     anrede = f"Sehr geehrte(r) {contact}"  # Beispieltext
     return anrede
-
 
 if __name__ == "__main__":
     app.run(debug=True)
