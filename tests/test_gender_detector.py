@@ -38,7 +38,7 @@ def test_evaluate_gender(
     assert gender == expected_gender
 
 @pytest.mark.parametrize(
-    "parsedContact, expected_gender",
+    "parsed_contact, expected_gender",
     [
         ({
             "salutation": "Mr.",
@@ -72,6 +72,6 @@ def test_evaluate_gender(
         }, "ungültig"),
     ],
 )
-def test_get_gender(gender_detector: GenderDetector, parsedContact: dict, expected_gender: str):
-    gender = gender_detector.get_gender(parsedContact)
+def test_get_gender(gender_detector: GenderDetector, parsed_contact: dict, expected_gender: str):
+    gender = gender_detector.get_gender(parsed_contact)
     assert gender == expected_gender

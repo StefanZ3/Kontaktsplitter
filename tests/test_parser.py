@@ -1,6 +1,6 @@
 import pytest
 from backend.title_manager import TitleManager
-from backend.parser import ContactParser
+from backend.contact_parser import ContactParser
 
 
 @pytest.fixture
