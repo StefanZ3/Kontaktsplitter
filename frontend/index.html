@@ -7,7 +7,6 @@
 </head>
 <body>
 <div class="container mt-4">
-
     <div class="text-center mb-4">
         <h1>Kontaktsplitter</h1>
     </div>
@@ -24,16 +23,19 @@
       {% endif %}
     {% endwith %}
 
+    <!-- Platz für JavaScript-basierte Alerts -->
+    <div id="js-alert-container"></div>
+
     <div class="row">
         <!-- Kontakt zerlegen -->
         <div class="col-md-8">
             <h3>Kontakt zerlegen</h3>
             <form class="row g-1" id="contactForm">
-                <div class="col-8">
+                <div class="col-6">
                     <div class="input-group mb-3">
                         <label class="input-group-text" for="inputString">Kontakt</label>
                         <input type="text" class="form-control" name="input-string" id="inputString" required
-                               pattern="^[A-Za-zÄÖÜäöüßñ\-. ]+$"
+                               pattern="^[A-Za-zÄÖÜäöüßñ\-. ]+$" aria-describedby="kontaktHelp"
                                title="Nur Buchstaben, Punkt und Bindestrich erlaubt.">
                         <div class="invalid-feedback">
                             Nur Buchstaben, Leerzeichen, Punkt und Bindestrich erlaubt.
@@ -84,28 +86,27 @@
     <h4>Gespeicherte Kontakte</h4>
     <div class="row">
         <div class="col-md-8">
-            <ul class="list-group" id="saved-contacts-list">
-                {% if contacts %}
+            {% if contacts %}
+                <ul class="list-group" id="saved-contacts-list">
                     {% for contact in contacts %}
                         <li class="list-group-item d-flex justify-content-between align-items-center">
                             {{ contact }}
                             <button class="btn btn-sm btn-outline-secondary" onclick="zeigeBriefanrede({{ loop.index0 }})">Briefanrede anzeigen</button>
                         </li>
                     {% endfor %}
-                {% else %}
-                    <li class="list-group-item">Keine Kontakte gespeichert.</li>
-                {% endif %}
-            </ul>
+                </ul>
+            {% else %}
+                <div class="alert alert-info">Keine Kontakte gespeichert.</div>
+            {% endif %}
         </div>
 
-        <!-- Alle Titel mit Scroll -->
         <div class="col-md-4">
             <h5>Alle Titel</h5>
             <div class="border rounded p-2 bg-light" style="max-height: 200px; overflow-y: auto;">
                 {% for title in titles %}
                     {{ title }} <br>
                 {% else %}
-                    Keine Titel vorhanden.
+                    <span class="text-muted fst-italic">Keine Titel vorhanden.</span>
                 {% endfor %}
             </div>
         </div>
@@ -172,61 +173,61 @@
 <!-- JavaScript -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 <script>
-    document.getElementById('submitAndOpenModal').addEventListener('click', async function () {
-        const inputEl = document.getElementById('inputString');
-        const input = inputEl.value;
-        const regex = /^[A-Za-zÄÖÜäöüßñ\-. ]+$/;
+    document.addEventListener('DOMContentLoaded', () => {
+        const inputField = document.getElementById('inputString');
+        const submitButton = document.getElementById('submitAndOpenModal');
+        const newTitleField = document.getElementById('new-title');
 
-        // Leereingabe prüfen
-        if (!input.trim()) {
-            inputEl.reportValidity();
-            return;
-        }
+        inputField.focus();
 
-        // Regex-Prüfung
-        if (!regex.test(input)) {
-            inputEl.setCustomValidity("Nur Buchstaben, Punkt und Bindestrich erlaubt.");
-            inputEl.reportValidity();
-            return;
-        } else {
-            inputEl.setCustomValidity(""); // zurücksetzen, wenn gültig
-        }
-
-        // Anfrage ans Backend senden
-        try {
-            const response = await fetch('/split', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ kontakt: input })
-            });
-
-            if (response.ok) {
-                const data = await response.json();
-                document.getElementById('modal-title').value = data.titel || '';
-                document.getElementById('modal-firstname').value = data.vorname || '';
-                document.getElementById('modal-lastname').value = data.nachname || '';
-                document.getElementById('modal-gender').value = String(data.geschlecht || '');
-
-                new bootstrap.Modal(document.getElementById('resultModal')).show();
-            } else {
-                alert("Fehler beim Zerlegen.");
+        submitButton.addEventListener('click', async () => {
+            if (!inputField.checkValidity()) {
+                inputField.reportValidity();
+                return;
             }
-        } catch (error) {
-            alert("Ein Fehler ist aufgetreten: " + error.message);
-        }
-    });
 
-    // ENTER-Taste im Eingabefeld auslösen wie Button-Klick
-    document.getElementById('inputString').addEventListener('keydown', function (event) {
-        if (event.key === 'Enter') {
-            event.preventDefault();
-            document.getElementById('submitAndOpenModal').click();
-        }
+            try {
+                const response = await fetch('/split', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ kontakt: inputField.value })
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+                    document.getElementById('modal-title').value = data.titel || '';
+                    document.getElementById('modal-firstname').value = data.vorname || '';
+                    document.getElementById('modal-lastname').value = data.nachname || '';
+                    document.getElementById('modal-gender').value = String(data.geschlecht || '');
+                    new bootstrap.Modal(document.getElementById('resultModal')).show();
+                } else {
+                    showAlert('Fehler beim Zerlegen.');
+                }
+            } catch (error) {
+                showAlert('Ein Fehler ist aufgetreten: ' + error.message);
+            }
+        });
+
+        inputField.addEventListener('keydown', (event) => {
+            if (event.key === 'Enter') {
+                event.preventDefault();
+                submitButton.click();
+            }
+        });
+
+        inputField.addEventListener('input', () => {
+            const regex = /^[A-Za-zÄÖÜäöüßñ\-. ]*$/;
+            inputField.classList.toggle('is-invalid', !regex.test(inputField.value));
+        });
+
+        newTitleField.addEventListener('input', function () {
+            const regex = /^[A-Za-zÄÖÜäöüßñ\-. ]*$/;
+            this.classList.toggle('is-invalid', !regex.test(this.value));
+        });
     });
 
     document.getElementById('saveContactForm').addEventListener('submit', async function (event) {
         event.preventDefault();
-
         const kontakt = {
             titel: document.getElementById('modal-title').value,
             vorname: document.getElementById('modal-firstname').value,
@@ -242,14 +243,13 @@
             });
 
             if (response.ok) {
-                const modalElement = bootstrap.Modal.getInstance(document.getElementById('resultModal'));
-                if (modalElement) modalElement.hide();  // Modal schließen
+                bootstrap.Modal.getInstance(document.getElementById('resultModal')).hide();
                 location.reload();
             } else {
-                alert("Fehler beim Speichern.");
+                showAlert('Fehler beim Speichern.');
             }
         } catch (error) {
-            alert("Ein Fehler ist aufgetreten: " + error.message);
+            showAlert('Fehler beim Speichern: ' + error.message);
         }
     });
 
@@ -260,27 +260,32 @@
                 document.getElementById('anredeText').textContent = anrede;
                 new bootstrap.Modal(document.getElementById('anredeModal')).show();
             })
-            .catch(err => alert("Fehler beim Laden der Anrede: " + err));
+            .catch(err => showAlert('Fehler beim Laden der Anrede: ' + err));
     }
 
     function kopiereAnrede() {
         const text = document.getElementById('anredeText').textContent;
         navigator.clipboard.writeText(text)
-            .then(() => alert("Anrede wurde in die Zwischenablage kopiert!"))
-            .catch(err => alert("Fehler beim Kopieren: " + err));
+            .then(() => showAlert('Anrede wurde in die Zwischenablage kopiert!', 'success'))
+            .catch(err => showAlert('Fehler beim Kopieren: ' + err));
     }
 
-    // Live-Validierung
-    document.getElementById('inputString').addEventListener('input', function () {
-        const regex = /^[A-Za-zÄÖÜäöüßñ\-. ]*$/;
-        this.classList.toggle('is-invalid', !regex.test(this.value));
-    });
+    function showAlert(message, type = 'danger') {
+        const alert = document.createElement('div');
+        alert.className = `alert alert-${type} alert-dismissible fade show mt-3`;
+        alert.role = 'alert';
+        alert.innerHTML = `
+            ${message}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Schließen"></button>
+        `;
 
-    document.getElementById('new-title').addEventListener('input', function () {
-        const regex = /^[A-Za-zÄÖÜäöüßñ\-. ]*$/;
-        this.classList.toggle('is-invalid', !regex.test(this.value));
-    });
+        const container = document.getElementById('js-alert-container');
+        if (container) {
+            container.appendChild(alert);
+        } else {
+            console.warn("js-alert-container nicht gefunden.");
+        }
+    }
 </script>
-
 </body>
 </html>

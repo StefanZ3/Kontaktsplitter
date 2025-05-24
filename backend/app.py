@@ -57,6 +57,7 @@ def save_contact():
 
     kontakt_string = f"{titel} {vorname} {nachname}".strip()
     contacts.append(kontakt_string)
+    flash("Kontakt erfolgreich hinzugefügt.", "success")
 
     return jsonify({"status": "success"})
 
