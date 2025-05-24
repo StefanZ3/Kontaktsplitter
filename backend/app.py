@@ -39,13 +39,13 @@ def index():
     )
 
 @app.route("/split", methods=["POST"])
-def split_kontakt():
+def split_new_contact():
     data = request.get_json()
-    kontakt = data.get("kontakt", "")
-    if not kontakt.strip():
+    new_contact = data.get("new_contact", "")
+    if not new_contact.strip():
         return jsonify({"error": "Leerer Kontakt"}), 400
     
-    parsed = parser.parse(kontakt)
+    parsed = parser.parse(new_contact)
     gender = gender_detector.get_gender(parsed)
 
     return jsonify(parsed)
@@ -53,13 +53,7 @@ def split_kontakt():
 @app.route("/save_contact", methods=["POST"])
 def save_contact():
     data = request.get_json()
-    # Daten extrahieren
-    titel = data.get("titel", "").strip()
-    vorname = data.get("vorname", "").strip()
-    nachname = data.get("nachname", "").strip()
-
-    kontakt_string = f"{titel} {vorname} {nachname}".strip()
-    contacts.append(kontakt_string)
+    contacts.append(data)
     flash("Kontakt erfolgreich hinzugefügt.", "success")
 
     return jsonify({"status": "success"})

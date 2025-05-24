@@ -90,7 +90,7 @@
                 <ul class="list-group" id="saved-contacts-list">
                     {% for contact in contacts %}
                         <li class="list-group-item d-flex justify-content-between align-items-center">
-                            {{ contact }}
+                            {{ contact.titles }} {{ contact.first_name }} {{ contact.last_name }} ({{ contact.language }})
                             <button class="btn btn-sm btn-outline-secondary" onclick="zeigeBriefanrede({{ loop.index0 }})">Briefanrede anzeigen</button>
                         </li>
                     {% endfor %}
@@ -124,8 +124,8 @@
                 </div>
                 <div class="modal-body">
                     <div class="mb-2">
-                        <label for="modal-title">Titel</label>
-                        <input type="text" class="form-control" id="modal-title">
+                        <label for="modal-titles">Titel</label>
+                        <input type="text" class="form-control" id="modal-titles">
                     </div>
                     <div class="mb-2">
                         <label for="modal-firstname">Vorname</label>
@@ -142,6 +142,16 @@
                             <option value="1">Männlich</option>
                             <option value="2">Weiblich</option>
                             <option value="3">Divers</option>
+                        </select>
+                    </div>
+                    <div class="mb-2">
+                        <label for="modal-language">Sprache</label>
+                        <select class="form-select" id="modal-language" required>
+                            <option value="" disabled selected hidden>Auswählen...</option>
+                            <option value="DE">DE</option>
+                            <option value="EN">EN</option>
+                            <option value="ES">ES</option>
+                            <option value="FR">FR</option>
                         </select>
                     </div>
                 </div>
@@ -190,15 +200,16 @@
                 const response = await fetch('/split', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ kontakt: inputField.value })
+                    body: JSON.stringify({ new_contact: inputField.value })
                 });
 
                 if (response.ok) {
                     const data = await response.json();
-                    document.getElementById('modal-title').value = data.titel || '';
-                    document.getElementById('modal-firstname').value = data.vorname || '';
-                    document.getElementById('modal-lastname').value = data.nachname || '';
-                    document.getElementById('modal-gender').value = String(data.geschlecht || '');
+                    document.getElementById('modal-titles').value = data.titles || '';
+                    document.getElementById('modal-firstname').value = data.first_name || '';
+                    document.getElementById('modal-lastname').value = data.last_name || '';
+                    document.getElementById('modal-gender').value = String(data.gender || '');
+                    document.getElementById('modal-language').value = String(data.language || '');
                     new bootstrap.Modal(document.getElementById('resultModal')).show();
                 } else {
                     showAlert('Fehler beim Zerlegen.');
@@ -228,18 +239,19 @@
 
     document.getElementById('saveContactForm').addEventListener('submit', async function (event) {
         event.preventDefault();
-        const kontakt = {
-            titel: document.getElementById('modal-title').value,
-            vorname: document.getElementById('modal-firstname').value,
-            nachname: document.getElementById('modal-lastname').value,
-            geschlecht: document.getElementById('modal-gender').value
+        const new_contact = {
+            titles: document.getElementById('modal-titles').value,
+            first_name: document.getElementById('modal-firstname').value,
+            last_name: document.getElementById('modal-lastname').value,
+            gender: document.getElementById('modal-gender').value,
+            language: document.getElementById('modal-language').value
         };
 
         try {
             const response = await fetch('/save_contact', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(kontakt)
+                body: JSON.stringify(new_contact)
             });
 
             if (response.ok) {
