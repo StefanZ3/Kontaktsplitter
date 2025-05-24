@@ -15,9 +15,11 @@ def parser(title_manager: TitleManager):
 @pytest.mark.parametrize(
     "input_contact, expected_return_contact, expected_gender",
     [
-        ("Peter Fischer", "Peter Fischer", None),
-        ("Herr Dr. Peter Fischer", " Dr. Peter Fischer", "m"),
-        ("Frau Jana Müller", " Jana Müller", "w")
+        ("Peter Fischer", "Peter Fischer", ""),
+        ("Herr Dr. Peter Fischer", "Dr. Peter Fischer", "m"),
+        ("Frau Jana Müller", "Jana Müller", "w"),
+        ("frau Müller", "Müller", "w"),
+        ("Dr. Frau Müller", "Dr. Frau Müller", "")
     ],
 )
 def test_get_gender(parser: ContactParser, input_contact: str, expected_return_contact: str, expected_gender: str):
@@ -29,8 +31,8 @@ def test_get_gender(parser: ContactParser, input_contact: str, expected_return_c
     "input_contact, expected_return_contact, expected_titles",
     [
         ("Peter Fischer", "Peter Fischer", []),
-        ("Dr. Peter Fischer", " Peter Fischer", ["Dr."]),
-        ("Professor Dr. Michael Gehring", "  Michael Gehring", ["Professor", "Dr."])
+        ("Dr. Peter Fischer", "Peter Fischer", ["Dr."]),
+        ("Professor Dr. Michael Gehring", "Michael Gehring", ["Professor", "Dr."])
     ],
 )
 def test_get_titles(parser: ContactParser, input_contact: str, expected_return_contact: str, expected_titles: list[str]):
@@ -41,7 +43,7 @@ def test_get_titles(parser: ContactParser, input_contact: str, expected_return_c
 @pytest.mark.parametrize(
     "contact_with_names, expected_first_name, expected_last_name",
     [
-        ("Kleinert", None, ["Kleinert"]),
+        ("Kleinert", "", ["Kleinert"]),
         ("Peter Fischer", "Peter", ["Fischer"]),
         ("Antonius van Hoof", "Antonius", ["van", "Hoof"]),
     ],
