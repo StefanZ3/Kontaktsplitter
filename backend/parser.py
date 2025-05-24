@@ -12,6 +12,13 @@ class ContactParser:
         contact_with_names, titles = self.get_titles(contact_without_salutation)
         first_name, last_name = self.get_names(contact_with_names)
 
+        return {
+            "salutation": salutaion,
+            "titles": titles,
+            "first_name": first_name,
+            "last_name": last_name
+        }
+
     def get_salutation(self, input_contact: str) -> Tuple[str, str]:
         salutation = next((original for original in SALUTATIONS.keys() if input_contact.startswith(original)),"")
         # Gefundene Anrede entfernen und String bereinigen
