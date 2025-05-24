@@ -25,7 +25,8 @@ class GenderDetector:
         if parsed_first_name:
             gender_list.append(self.get_gender_from_first_name(parsed_first_name))
 
-        return self.evaluate_gender(gender_list)
+        gender = self.evaluate_gender_list(gender_list)
+        return gender
 
     def get_gender_from_first_name(self, first_name: str) -> str:
         """Verwendet das Modul gender_guesser, um das Geschlecht anhand des Vornamens zu bestimmen, gibt das Geschlecht zurück."""
@@ -43,7 +44,7 @@ class GenderDetector:
             return "weiblich"
         return "unisex"
 
-    def evaluate_gender(self, gender_list: list[str]) -> str:
+    def evaluate_gender_list(self, gender_list: list[str]) -> str:
         has_male = "männlich" in gender_list
         has_female = "weiblich" in gender_list
 

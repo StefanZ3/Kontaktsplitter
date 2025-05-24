@@ -1,0 +1,2 @@
+class LetterSalutationGenerator:
+    pass

@@ -34,7 +34,7 @@ def test_get_gender_from_first_name(
 def test_evaluate_gender(
     gender_detector: GenderDetector, gender_list: list[str], expected_gender: str
 ):
-    gender = gender_detector.evaluate_gender(gender_list)
+    gender = gender_detector.evaluate_gender_list(gender_list)
     assert gender == expected_gender
 
 @pytest.mark.parametrize(
