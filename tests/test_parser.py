@@ -19,7 +19,10 @@ def parser(title_manager: TitleManager):
         ("Herr Dr. Peter Fischer", "Dr. Peter Fischer", "Herr"),
         ("Frau Jana Müller", "Jana Müller", "Frau"),
         ("frau Müller", "frau Müller", ""),
-        ("Dr. Frau Müller", "Dr. Frau Müller", "")
+        ("Dr. Frau Müller", "Dr. Frau Müller", ""),
+        ("Mr. Schulz", "Schulz", "Mr."),
+        ("Señora Schulz", "Schulz", "Señora"),
+        ("Señor Schulz", "Schulz", "Señor"),
     ],
 )
 def test_get_salutation(parser: ContactParser, input_contact: str, expected_return_contact: str, expected_salutation: str):
