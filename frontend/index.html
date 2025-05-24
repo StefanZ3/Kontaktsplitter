@@ -87,14 +87,42 @@
     <div class="row">
         <div class="col-md-8">
             {% if contacts %}
-                <ul class="list-group" id="saved-contacts-list">
-                    {% for contact in contacts %}
-                        <li class="list-group-item d-flex justify-content-between align-items-center">
-                            {{ contact.titles }} {{ contact.first_name }} {{ contact.last_name }} ({{ contact.language }})
-                            <button class="btn btn-sm btn-outline-secondary" onclick="zeigeBriefanrede({{ loop.index0 }})">Briefanrede anzeigen</button>
-                        </li>
-                    {% endfor %}
-                </ul>
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle modern-table">
+                        <thead class="table-light">
+                            <tr>
+                                <th>Titel</th>
+                                <th>Vorname(n)</th>
+                                <th>Name(n)</th>
+                                <th>Geschlecht</th>
+                                <th>Nationalität</th>
+                                <th>Aktion</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for contact in contacts %}
+                            <tr>
+                                <td>{{ contact.titles }}</td>
+                                <td>{{ contact.first_name }}</td>
+                                <td>{{ contact.last_name }}</td>
+                                <td>
+                                    {% if contact.gender == "1" %}Männlich
+                                    {% elif contact.gender == "2" %}Weiblich
+                                    {% elif contact.gender == "3" %}Divers
+                                    {% else %}Unbekannt
+                                    {% endif %}
+                                </td>
+                                <td>{{ contact.language or '–' }}</td>
+                                <td>
+                                    <button class="btn btn-sm btn-outline-primary" onclick="zeigeBriefanrede({{ loop.index0 }})">
+                                        Briefanrede anzeigen
+                                    </button>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
             {% else %}
                 <div class="alert alert-info">Keine Kontakte gespeichert.</div>
             {% endif %}
