@@ -1,4 +1,5 @@
 from .title_manager import TitleManager
+from .constants import SALUTATIONS
 from typing import Tuple
 
 
@@ -7,21 +8,15 @@ class ContactParser:
         self.title_manager: TitleManager = title_manager
 
     def parse(self, input_contact: str):
-        contact_without_salutation, gender = self.get_gender(input_contact)
+        contact_without_salutation, salutaion = self.get_salutation(input_contact)
         contact_with_names, titles = self.get_titles(contact_without_salutation)
         first_name, last_name = self.get_names(contact_with_names)
 
-    def get_gender(self, input_contact: str) -> Tuple[str, str]:
-        gender = ""
-        if input_contact.lower().startswith("herr"):
-            gender = "m"
-            # Anrede entferen
-            input_contact = input_contact[4:]
-        elif input_contact.lower().startswith("frau"):
-            gender = "w"
-            # Anrede entfernen
-            input_contact = input_contact[4:]
-        return input_contact.strip(), gender
+    def get_salutation(self, input_contact: str) -> Tuple[str, str]:
+        salutation = next((original for original in SALUTATIONS if input_contact.startswith(original)),"")
+        # Gefundene Anrede entfernen und String bereinigen
+        input_contact = input_contact[len(salutation):].strip()
+        return input_contact, salutation
 
     def get_titles(self, input_contact: str) -> Tuple[str, list[str]]:
         # Die Titel absteigend nach Länge sortieren, damit Professorin vor Professor oder Dr.-Ing. vor Dr. gefunden wird

@@ -13,19 +13,19 @@ def parser(title_manager: TitleManager):
     return ContactParser(title_manager=title_manager)
 
 @pytest.mark.parametrize(
-    "input_contact, expected_return_contact, expected_gender",
+    "input_contact, expected_return_contact, expected_salutation",
     [
         ("Peter Fischer", "Peter Fischer", ""),
-        ("Herr Dr. Peter Fischer", "Dr. Peter Fischer", "m"),
-        ("Frau Jana Müller", "Jana Müller", "w"),
-        ("frau Müller", "Müller", "w"),
+        ("Herr Dr. Peter Fischer", "Dr. Peter Fischer", "Herr"),
+        ("Frau Jana Müller", "Jana Müller", "Frau"),
+        ("frau Müller", "frau Müller", ""),
         ("Dr. Frau Müller", "Dr. Frau Müller", "")
     ],
 )
-def test_get_gender(parser: ContactParser, input_contact: str, expected_return_contact: str, expected_gender: str):
-    return_contact, gender = parser.get_gender(input_contact)
+def test_get_salutation(parser: ContactParser, input_contact: str, expected_return_contact: str, expected_salutation: str):
+    return_contact, salutation = parser.get_salutation(input_contact)
     assert return_contact == expected_return_contact
-    assert gender == expected_gender
+    assert salutation == expected_salutation
 
 @pytest.mark.parametrize(
     "input_contact, expected_return_contact, expected_titles",
