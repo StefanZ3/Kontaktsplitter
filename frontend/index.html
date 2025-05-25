@@ -66,10 +66,10 @@
                     <label class="input-group-text" for="gender">Geschlecht</label>
                     <select class="form-select" id="gender" name="gender" required>
                         <option value="" disabled selected hidden>Auswählen...</option>
-                        <option value="0">Unisex/Neutral</option>
-                        <option value="1">Männlich</option>
-                        <option value="2">Weiblich</option>
-                        <option value="3">Divers</option>
+                        <option value="unisex">Unisex/Neutral</option>
+                        <option value="männlich">Männlich</option>
+                        <option value="weiblich">Weiblich</option>
+                        <option value="divers">Divers</option>
                     </select>
                 </div>
 
@@ -106,9 +106,9 @@
                                 <td>{{ contact.first_name }}</td>
                                 <td>{{ contact.last_name }}</td>
                                 <td>
-                                    {% if contact.gender == "1" %}Männlich
-                                    {% elif contact.gender == "2" %}Weiblich
-                                    {% elif contact.gender == "3" %}Divers
+                                    {% if contact.gender == "männlich" %}Männlich
+                                    {% elif contact.gender == "weiblich" %}Weiblich
+                                    {% elif contact.gender == "divers" %}Divers
                                     {% else %}Unbekannt
                                     {% endif %}
                                 </td>
@@ -167,9 +167,9 @@
                         <label for="modal-gender">Geschlecht</label>
                         <select class="form-select" id="modal-gender" required>
                             <option value="" disabled selected hidden>Auswählen...</option>
-                            <option value="1">Männlich</option>
-                            <option value="2">Weiblich</option>
-                            <option value="3">Divers</option>
+                            <option value="männlich">Männlich</option>
+                            <option value="weiblich">Weiblich</option>
+                            <option value="divers">Divers</option>
                         </select>
                     </div>
                     <div class="mb-2">
