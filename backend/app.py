@@ -20,14 +20,19 @@ contacts = []  # In-Memory-Speicherung
 @app.route("/", methods=["GET", "POST"])
 def index():
     if request.method == "POST":
-        action = request.form.get("action")
+        action = request.form.get("action", "").strip()
 
         if action == "add-title":
-            new_title = request.form.get("new-title")
-            gender = request.form.get("gender")
-            if new_title and gender:
-                title_manager.add_title(new_title.strip(), gender)
-                flash("Titel erfolgreich hinzugefügt.", "success")
+            new_title = request.form.get("new-title", "").strip()
+            gender = request.form.get("gender", "").strip()
+
+            if not new_title or not gender:
+                flash("Bitte geben Sie sowohl Titel als auch Geschlecht an.", "danger")
+            elif title_manager.is_known_title(new_title):
+                flash(f"Der Titel '{new_title}' ist bereits vorhanden.", "warning")
+            else:
+                title_manager.add_title(new_title, gender)
+                flash(f"Der Titel '{new_title}' wurde erfolgreich hinzugefügt.", "success")
 
         return redirect(url_for("index"))
 
@@ -40,8 +45,9 @@ def index():
 @app.route("/split", methods=["POST"])
 def split_new_contact():
     data = request.get_json()
-    new_contact = data.get("new_contact", "")
-    if not new_contact.strip():
+    new_contact = data.get("new_contact", "").strip()
+
+    if not new_contact:
         return jsonify({"error": "Leerer Kontakt"}), 400
     
     parsed = parser.parse(new_contact)
