@@ -10,8 +10,9 @@ def gender_detector():
 @pytest.mark.parametrize(
     "first_name, expected_gender",
     [
-        ("Peter", "männlich"),
-        ("Petra", "weiblich"),
+        ("Peter", ["männlich"]),
+        ("Petra", ["weiblich"]),
+        ("Sandra Sandro Pascal", ["weiblich", "männlich", "männlich"])
     ],
 )
 def test_get_gender_from_first_name(
@@ -48,6 +49,12 @@ def test_evaluate_gender(
         }, "männlich"),
         ({
             "salutation": "",
+            "titles": ["Baronin"],
+            "first_name": "",
+            "last_name": []
+        }, "weiblich"),
+        ({
+            "salutation": "",
             "titles": ["Prof.", "Dr."],
             "first_name": "",
             "last_name": []
@@ -58,13 +65,19 @@ def test_evaluate_gender(
             "first_name": "Nick",
             "last_name": []
         }, "männlich"),
-            ({
+        ({
+            "salutation": "",
+            "titles": [],
+            "first_name": "Nick Jan Peter",
+            "last_name": []
+        }, "männlich"),
+        ({
             "salutation": "Frau",
             "titles": ["Professorin", "Dr. rer. nat."],
             "first_name": "Julia",
             "last_name": "Mustermann"
         }, "weiblich"),
-            ({
+        ({
             "salutation": "Frau",
             "titles": ["Professorin", "Dr. rer. nat."],
             "first_name": "Jan",
@@ -72,7 +85,6 @@ def test_evaluate_gender(
         }, ""),
     ],
 )
-
 def test_get_gender(gender_detector: GenderDetector, parsed_contact: dict, expected_gender: str):
     gender = gender_detector.get_gender(
         parsed_contact["salutation"],

@@ -20,20 +20,27 @@ class GenderDetector:
                 current_gender = TITEL_METADATA[title]["geschlecht"]
                 gender_list.append(current_gender)
 
-        # Ermitteln des Geschlechts für den Vornamen, falls vorhanden
+        # Ermitteln des Geschlechts für alle Vornamen, falls vorhanden
         if parsed_first_name:
-            gender_list.append(self.get_gender_from_first_name(parsed_first_name))
+            gender_list.extend(self.get_gender_from_first_name(parsed_first_name))
 
         gender = self.evaluate_gender_list(gender_list)
         return gender
 
-    def get_gender_from_first_name(self, first_name: str) -> str:
-        """Verwendet das Modul gender_guesser, um das Geschlecht anhand des Vornamens zu bestimmen, gibt das Geschlecht zurück."""
+    def get_gender_from_first_name(self, first_name: str) -> list[str]:
+        """Verwendet das Modul gender_guesser, um für alle Vornamen das Geschlecht zu bestimmen, gibt eine Liste zurück."""
+        # first_name ist ein String, der alle Vornamen getrennt durch Leerzeichen enthält
+        first_names = first_name.split()
         detector = gender_guesser.Detector()
+        first_name_genders = []
+
+        for name in first_names:
         # Rückgabewerte: "male", "mostly_male", "female", "mostly_female", "unknown", "andy"
-        detected_gender = detector.get_gender(first_name)
-        normalized_gender = self.normalize_gender(detected_gender)
-        return normalized_gender
+            detected_gender = detector.get_gender(name)
+            normalized_gender = self.normalize_gender(detected_gender)
+            first_name_genders.append(normalized_gender)
+
+        return first_name_genders
 
     def normalize_gender(self, detected_gender: str) -> str:
         """Übersetzt das ermittelte Ergebnis in die deutsche Geschlechtsform."""
@@ -44,6 +51,8 @@ class GenderDetector:
         return "unisex"
 
     def evaluate_gender_list(self, gender_list: list[str]) -> str:
+        """Wertet die Liste mit allen ermittelten Geschlechtern aus und gibt das Geschlecht zurück,
+        falls keine eindeutige Auflösung möglich ist oder keine Angaben vorhanden sind wird ein leerer String zurückgegeben."""
         has_male = "männlich" in gender_list
         has_female = "weiblich" in gender_list
 
