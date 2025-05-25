@@ -1,11 +1,13 @@
 # Definition of Done
 
-- In Stichpunkten
-
-- Der Code ist funktional, lauffähig unter Windows 11 und dokumentiert.
+- Der Code ist funktional, unter Windows 11 (inkl. Flask) lauffähig und dokumentiert.
+- Der Parser verarbeitet alle Testdaten korrekt.
+- Alle Bestandteile (z. B. Anrede, Titel, Geschlecht, Sprache) werden korrekt extrahiert und angezeigt.
+- Die Briefanrede wird für jeden Kontakt korrekt generiert (inkl. Adelstitel).
+- Die Sprache wird anhand der Anrede erkannt (z. B. „Mme.“ = Französisch).
 - Manuelle Eingabe- und Korrekturoptionen sind integriert und nutzbar.
-- Das Hinzufügen von Titeln funktioniert lokal innerhalb der Sitzung.
-- Briefanrede wird für jeden verarbeiteten Kontakt korrekt angezeigt.
-- Der Prototyp zeigt Beispieleingaben (aus Testdaten) korrekt an.
-- Alle User Stories umgesetzt und getestet.
-- Releasenote vorhanden.
+- Neue Titel können manuell hinzugefügt werden.
+- Der Prototyp zeigt Beispieleingaben aus Testdaten korrekt an.
+- Alle User Stories sind umgesetzt und getestet.
+- Tests sind vorhanden für Parser, Anrede, Geschlecht und Sprache.
+- Eine Releasenote liegt bei.

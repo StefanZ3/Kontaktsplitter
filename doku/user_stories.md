@@ -1,44 +1,69 @@
 # User Stories
 
-Als Nutzer möchte ich, dass der Eingabe-String so zerlegt wird, dass Anrede, Titel, Geschlecht, Vorname, Nachname und eine standardisierte Briefanrede erstellt und angezeigt werden, damit ich einen Überblick über alle wichtigen Informationen erhalte.
+## 1. Automatische Zerlegung von Namen
 
-Akzeptanzkriterien:
+**Als Nutzer** möchte ich einen Namen eingeben können, der automatisch in Anrede, Titel, Vorname, Nachname, Geschlecht und Sprache zerlegt wird,  
+**damit** ich alle relevanten Informationen auf einen Blick sehe.
 
-1. ...
-2. ...
+**Akzeptanzkriterien:**
+- Bei Eingabe von z. B. „Herr Dr. Max Mustermann“ wird korrekt erkannt:
+  - Anrede: Herr
+  - Titel: Dr.
+  - Vorname: Max
+  - Nachname: Mustermann
+  - Geschlecht: männlich
+  - Sprache: Deutsch
+- Aus den Bestandteilen wird automatisch eine vollständige Briefanrede generiert:  
+  „Sehr geehrter Herr Dr. Mustermann“
 
-Als Nutzer möchte ich, dass alle generierten Briefanreden aller hinzugefügten Kontakte in der aktuellen Sitzung angezeigt werden, damit ich diese einsehen und verwenden kann.
+## 2. Manuelle Korrektur
 
-Akzeptanzkriterien:
+**Als Nutzer** möchte ich einzelne erkannte Felder manuell korrigieren können,  
+**damit** ich falsche automatische Zuordnungen anpassen kann.
 
-1. Es werden alle Briefanreden lokal gespeichert und angezeigt.
+**Akzeptanzkriterien:**
+- Alle Felder sind in der UI editierbar.
+- Eine Korrektur ist vor dem Speichern möglich.
+- Ein Dialog oder Interface-Element ermöglicht die manuelle Bearbeitung.
 
-Als Nutzer möchte ich, dass alle Titel angezeigt werden und ein neuer Titel manuell hinzugefügt werden kann, damit das System diese automatisch erkennt und korrekt zuordnet.
+## 3. Hinzufügen neuer Titel
 
-Akzeptanzkriterien:
+**Als Nutzer** möchte ich neue Titel zur Erkennung hinzufügen können,  
+**damit** das System diese automatisch berücksichtigt.
 
-1. Es werden alle aktuellen Titel in einer Liste angezeigt.
-2. Der Nutzer kann den neuen Titel in ein Textfeld eintragen und das zugehörige Geschlecht auswählen und über einen Button hinzufügen.
-3. Beide Eingabefelder (Titel und Geschlecht) müssen ausgefüllt sein, um einen Titel hinzuzufügen. Der Nutzer wird informiert, wenn diese Eingabefelder nicht ausgefüllt sind.
-4. Das System überprüft, ob der eingegebene Titel bereits existiert, um doppelte Einträge zu vermeiden.
+**Akzeptanzkriterien:**
+- Es wird eine Liste der aktuell bekannten Titel angezeigt.
+- Ein neuer Titel kann in ein Textfeld eingetragen werden.
+- Das zugehörige Geschlecht muss ausgewählt werden.
+- Beide Felder (Titel und Geschlecht) sind Pflichtangaben.
+- Eine Prüfung verhindert doppelte Einträge.
+- Nach erfolgreicher Eingabe wird der Titel für die laufende Sitzung übernommen.
 
+## 4. Anzeige aller generierten Briefanreden
 
-Als Nutzer möchte ich auch manuell einzelne Felder korrigieren können, wenn die automatische Erkennung fehlschlägt.
-Akzeptanzkriterium: 
-1. Ein Dialog ermöglicht die manuelle Nachbearbeitung.
+**Als Nutzer** möchte ich, dass alle Briefanreden der bearbeiteten Kontakte angezeigt werden,  
+**damit** ich diese einsehen und direkt verwenden kann.
 
-Als Nutzer möchte ich sicherstellen, dass bei Eingabe nur eines Worts dieses automatisch als Nachname erkannt wird.
-Akzeptanzkriterium: 
-1. Bei Eingabe von „Müller“ wird Nachname = Müller gesetzt, alle anderen Felder leer.
+**Akzeptanzkriterien:**
+- Generierte Anreden werden durch einen Button bei dem Kontakt angezeigt.
+- Die Daten bleiben während der Sitzung verfügbar.
 
-Als Nutzer möchte ich, dass aus den erkannten Bestandteilen automatisch eine vollständige, standardisierte Briefanrede erstellt wird damit ich diese direkt verwenden kann.
-Akzeptanzkriterien:
-1. Bei "Herr Dr. Max Mustermann" wird generiert: "Sehr geehrter Herr Dr. Mustermann".
-2. Die Anrede berücksichtigt Titel und Geschlecht korrekt.
+## 5. Verarbeitung von Ein-Wort-Eingaben
 
-Sprache und Herkunft erkennen (nice to have)
-Als Nutzer möchte ich, dass das System erkennt, wenn ein Name nicht deutsch ist damit ich über mögliche Formatierungsabweichungen informiert werde.
-Akzeptanzkriterien:
-1. Namen wie "Mme. Charlotte Noir" lösen eine Meldung "Sprache: Französisch" aus.
-2. Eine entsprechende Empfehlung zur manuellen Prüfung wird angezeigt.
-3. Die Sprache wird basierend auf Anrede oder Namensbestandteilen ermittelt (z. B. "Mrs.", "Mme", ...).
+**Als Nutzer** möchte ich, dass bei Eingabe nur eines Worts dieses automatisch als Nachname erkannt wird,  
+**damit** einfache Fälle schnell erfasst werden können.
+
+**Akzeptanzkriterium:**
+- Bei Eingabe von „Müller“ wird gesetzt:
+  - Nachname: Müller
+  - Alle anderen Felder bleiben leer
+
+## 6. Spracherkennung (Nice to Have)
+
+**Als Nutzer** möchte ich, dass das System erkennt, wenn ein Name aus einer anderen Sprache stammt,  
+**damit** ich auf mögliche Abweichungen hingewiesen werde.
+
+**Akzeptanzkriterien:**
+- Namen wie „Mme. Charlotte Noir“ führen zur Anzeige: „Sprache: Französisch“
+- Eine Empfehlung zur manuellen Prüfung wird angezeigt.
+- Die Sprache wird anhand der Anrede oder Namensbestandteile erkannt (z. B. „Mrs.“, „Mme“, …)
