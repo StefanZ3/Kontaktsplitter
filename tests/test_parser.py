@@ -18,7 +18,7 @@ def parser(title_manager: TitleManager):
         ("Peter Fischer", "Peter Fischer", ""),
         ("Herr Dr. Peter Fischer", "Dr. Peter Fischer", "Herr"),
         ("Frau Jana Müller", "Jana Müller", "Frau"),
-        ("frau Müller", "frau Müller", ""),
+        ("frau Müller", "Müller", "Frau"),
         ("Dr. Frau Müller", "Dr. Frau Müller", ""),
         ("Mr. Schulz", "Schulz", "Mr."),
         ("Señora Schulz", "Schulz", "Señora"),

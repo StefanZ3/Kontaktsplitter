@@ -62,11 +62,16 @@ TITEL_METADATA = {
 SALUTATIONS = {
     "Herr": {"geschlecht": "männlich", "nationalitaet": "DE"},
     "Frau": {"geschlecht": "weiblich", "nationalitaet": "DE"},
+    "Ms.": {"geschlecht": "weiblich", "nationalitaet": "EN"},
+    "Miss": {"geschlecht": "weiblich", "nationalitaet": "EN"},
     "Mrs.": {"geschlecht": "weiblich", "nationalitaet": "EN"},
     "Mr.": {"geschlecht": "männlich", "nationalitaet": "EN"},
     "Mme.": {"geschlecht": "weiblich", "nationalitaet": "FR"},
     "M.": {"geschlecht": "männlich", "nationalitaet": "FR"},
+    "Madame": {"geschlecht": "weiblich", "nationalitaet": "FR"},
+    "Monsieur": {"geschlecht": "männlich", "nationalitaet": "FR"},
     "Señora": {"geschlecht": "weiblich", "nationalitaet": "ES"},
+    "Señorita": {"geschlecht": "weiblich", "nationalitaet": "ES"},
     "Señor": {"geschlecht": "männlich", "nationalitaet": "ES"},
 }
 

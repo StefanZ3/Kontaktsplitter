@@ -12,21 +12,21 @@ def language_detector():
             "salutation": "",
             "titles": ["Prof.", "Dr."],
             "first_name": "",
-            "last_name": []
+            "last_name": ""
         }, "DE"),
         ({
             "salutation": "Mr.",
             "titles": [],
             "first_name": "",
-            "last_name": []
+            "last_name": ""
         }, "EN"),
         ({
             "salutation": "M.",
             "titles": [],
             "first_name": "Nick",
-            "last_name": []
+            "last_name": ""
         }, "FR"),
-            ({
+        ({
             "salutation": "Señora",
             "titles": ["Professorin", "Dr. rer. nat."],
             "first_name": "Julia",
@@ -35,5 +35,6 @@ def language_detector():
     ],
 )
 def test_get_language(language_detector: LanguageDetector, parsed_contact: dict, expected_language: str):
-    language = language_detector.get_language(parsed_contact)
+    salutation = parsed_contact["salutation"]
+    language = language_detector.get_language(salutation)
     assert language == expected_language

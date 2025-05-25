@@ -4,12 +4,9 @@ from .constants import SALUTATIONS, TITEL_METADATA
 
 
 class GenderDetector:
-    def get_gender(self, parsed_contact):
+    def get_gender(self, parsed_salutation: str, parsed_titles: list, parsed_first_name: str):
         """Ermittelt das Geschlecht mithilfe Anrede, Titel und Vorname, 
         gibt \"ungültig\" zurück, wenn beide Geschlechter gefunden werden."""
-        parsed_salutation = parsed_contact["salutation"]
-        parsed_titles = parsed_contact["titles"]
-        parsed_first_name = parsed_contact["first_name"]
         # Liste für alle Geschlechtereinträge
         gender_list = []
 
@@ -51,10 +48,10 @@ class GenderDetector:
         has_female = "weiblich" in gender_list
 
         if has_male and has_female:
-            return "ungültig"
+            return ""
         elif has_male:
             return "männlich"
         elif has_female:
             return "weiblich"
         else:
-            return "unisex"
+            return ""

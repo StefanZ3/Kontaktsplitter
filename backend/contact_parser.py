@@ -1,29 +1,41 @@
 from .title_manager import TitleManager
 from .constants import SALUTATIONS, LASTNAME_PREFIXES
 from typing import Tuple
+from .gender_detector import GenderDetector
+from .language_detector import LanguageDetector
 
 
 class ContactParser:
     def __init__(self, title_manager: TitleManager):
         self.title_manager: TitleManager = title_manager
+        self.gender_detector = GenderDetector()
+        self.language_detector = LanguageDetector()
 
     def parse(self, input_contact: str):
         contact_without_salutation, salutaion = self.get_salutation(input_contact)
-        contact_with_names, titles = self.get_titles(contact_without_salutation)
-        first_name, last_name = self.get_names(contact_with_names)
+        contact_with_names, titel_liste = self.get_titles(contact_without_salutation)
+        first_name, last_name = self.get_names(contact_with_names) 
+        gender = self.gender_detector.get_gender(salutaion,titel_liste, first_name)
+        language = self.language_detector.get_language(salutaion)
+        titel_string = " ".join(titel_liste)
 
         return {
             "salutation": salutaion,
-            "titles": titles,
+            "titles": titel_string,
             "first_name": first_name,
-            "last_name": last_name
+            "last_name": last_name,
+            "gender": gender,
+            "language": language
         }
 
     def get_salutation(self, input_contact: str) -> Tuple[str, str]:
-        salutation = next((original for original in SALUTATIONS.keys() if input_contact.startswith(original)),"")
-        # Gefundene Anrede entfernen und String bereinigen
-        input_contact = input_contact[len(salutation):].strip()
-        return input_contact, salutation
+        input_lower = input_contact.lower()
+        for original in SALUTATIONS:
+            if input_lower.startswith(original.lower()):
+                # Korrigierte Länge basierend auf dem gefundenen Schlüssel
+                match_length = len(original)
+                return input_contact[match_length:].strip(), original
+        return input_contact, ""
 
     def get_titles(self, input_contact: str) -> Tuple[str, list[str]]:
         # Die Titel absteigend nach Länge sortieren, damit Professorin vor Professor oder Dr.-Ing. vor Dr. gefunden wird

@@ -24,9 +24,9 @@ def test_get_gender_from_first_name(
 @pytest.mark.parametrize(
     "gender_list, expected_gender",
     [
-        ([], "unisex"),
-        (["unisex", "unisex"], "unisex"),
-        (["weiblich", "weiblich", "männlich"], "ungültig"),
+        ([], ""),
+        (["unisex", "unisex"], ""),
+        (["weiblich", "weiblich", "männlich"], ""),
         (["unisex", "weiblich"], "weiblich"),
         (["unisex", "männlich"], "männlich"),
     ],
@@ -51,7 +51,7 @@ def test_evaluate_gender(
             "titles": ["Prof.", "Dr."],
             "first_name": "",
             "last_name": []
-        }, "unisex"),
+        }, ""),
         ({
             "salutation": "",
             "titles": [],
@@ -69,9 +69,14 @@ def test_evaluate_gender(
             "titles": ["Professorin", "Dr. rer. nat."],
             "first_name": "Jan",
             "last_name": "Mustermann"
-        }, "ungültig"),
+        }, ""),
     ],
 )
+
 def test_get_gender(gender_detector: GenderDetector, parsed_contact: dict, expected_gender: str):
-    gender = gender_detector.get_gender(parsed_contact)
+    gender = gender_detector.get_gender(
+        parsed_contact["salutation"],
+        parsed_contact["titles"],
+        parsed_contact["first_name"]
+    )
     assert gender == expected_gender
