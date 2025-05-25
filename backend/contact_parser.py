@@ -47,20 +47,6 @@ class ContactParser:
                 # Gefundene Titel entfernen
                 input_contact = input_contact.replace(title, "")
         return input_contact.strip(), titles
-
-    def old_get_names(self, contact_with_names: str) -> Tuple[str, list[str]]:
-        names = contact_with_names.split()
-        # Wenn die Liste leer ist, sind keine Namen enthalten
-        if not names:
-            return "", []
-        # Wenn die Liste einen Namen enthält, wird dieser als Nachname interpretiert
-        if len(names) == 1:
-            return "", [names[0]]
-        # Wenn die Liste mehr als einen Namen enthält wird der erste Name als Vorname und der Rest als Nachname interpretiert
-        else:
-            first_name = names[0]
-            last_name = names[1:]
-            return first_name, last_name
         
     def get_names(self, contact_with_names: str) -> Tuple[str, str]:
         names = contact_with_names.strip().split()
