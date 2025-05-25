@@ -43,6 +43,16 @@ def letter_salutation_generator(title_manager):
         },
         "Sehr geehrte Frau Dr. Schmied,"),
 
+        # Mehrere anzuzeigende Titel, beide Titel anzeigen
+        ({
+            "titles": "Baron Edler",
+            "first_name": "",
+            "last_name": "Schmidt",
+            "gender": "männlich",
+            "language": "DE"
+        },
+        "Sehr geehrter Herr Baron Edler Schmidt,"),
+
         # Kein Titel, normaler Nachname
         ({
             "titles": "",

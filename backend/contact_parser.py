@@ -12,6 +12,8 @@ class ContactParser:
         self.language_detector = LanguageDetector()
 
     def parse(self, input_contact: str):
+        """Ermittelt Anrede, Titel, Vorname, Nachname, Geschlecht und Nationalität
+        vom Eingabe-String, gibt die Werte als dict zurück."""
         contact_without_salutation, salutaion = self.get_salutation(input_contact)
         contact_with_names, titel_liste = self.get_titles(contact_without_salutation)
         first_name, last_name = self.get_names(contact_with_names) 

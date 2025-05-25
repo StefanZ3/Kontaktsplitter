@@ -8,7 +8,7 @@ def gender_detector():
 
 
 @pytest.mark.parametrize(
-    "first_name, expected_gender",
+    "first_name, expected_gender_list",
     [
         ("Peter", ["männlich"]),
         ("Petra", ["weiblich"]),
@@ -16,10 +16,10 @@ def gender_detector():
     ],
 )
 def test_get_gender_from_first_name(
-    gender_detector: GenderDetector, first_name: str, expected_gender: str
+    gender_detector: GenderDetector, first_name: str, expected_gender_list: str
 ):
     gender = gender_detector.get_gender_from_first_name(first_name)
-    assert gender == expected_gender
+    assert gender == expected_gender_list
 
 
 @pytest.mark.parametrize(

@@ -70,9 +70,10 @@ class LetterSalutationGenerator:
                         return prio_title
 
         # 2. Durchlauf: alle anderen Titel mit include_in_salutation = True
+        showed_titles = []
         for t in titles:
             metadata = self.title_manager.get_title_metadata(t)
             if metadata and metadata.get("include_in_salutation", False):
-                return t  # z. B. "Ing."
-
-        return ""
+                showed_titles.append(t) 
+        showed_title_str = " ".join(showed_titles) # z. B. "Ing. Edler"
+        return showed_title_str
