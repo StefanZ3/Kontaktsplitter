@@ -96,7 +96,7 @@ def letter_salutation_generator():
             "gender": "weiblich",
             "language": "EN"
         },
-        "Dear Ms. Professor Johnson,"),
+        "Dear Ms. Professorin Johnson,"),
 
         # Französische Anrede, kein Titel
         ({
