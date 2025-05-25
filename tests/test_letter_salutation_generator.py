@@ -1,9 +1,14 @@
 import pytest
+from backend.title_manager import TitleManager
 from backend.letter_salutation_generator import LetterSalutationGenerator
 
 @pytest.fixture
-def letter_salutation_generator():
-    return LetterSalutationGenerator()
+def title_manager():
+    return TitleManager()
+
+@pytest.fixture
+def letter_salutation_generator(title_manager):
+    return LetterSalutationGenerator(title_manager)
 
 @pytest.mark.parametrize(
     "parsed_contact, expected_letter_salutation",
@@ -15,7 +20,7 @@ def letter_salutation_generator():
             "last_name": "Schmied",
             "gender": "divers",
             "language": "DE"
-        }, 
+        },
         "Sehr geehrte Damen und Herren,"),
 
         # Professor → höchster Titel, ausgeschrieben
@@ -25,7 +30,7 @@ def letter_salutation_generator():
             "last_name": "Schmied",
             "gender": "männlich",
             "language": "DE"
-        }, 
+        },
         "Sehr geehrter Herr Professor Schmied,"),
 
         # Mehrere Dr.-Titel → nur ein "Dr." in Anrede
@@ -35,7 +40,7 @@ def letter_salutation_generator():
             "last_name": "Schmied",
             "gender": "weiblich",
             "language": "DE"
-        }, 
+        },
         "Sehr geehrte Frau Dr. Schmied,"),
 
         # Kein Titel, normaler Nachname
@@ -45,7 +50,7 @@ def letter_salutation_generator():
             "last_name": "van Gerwen",
             "gender": "männlich",
             "language": "DE"
-        }, 
+        },
         "Sehr geehrter Herr van Gerwen,"),
 
         # König → spezielle Monarchen-Anrede
@@ -119,10 +124,6 @@ def letter_salutation_generator():
         "Estimados señores,"),
     ],
 )
-def test_get_letter_salutation(
-    letter_salutation_generator: LetterSalutationGenerator,
-    parsed_contact: dict,
-    expected_letter_salutation: str
-):
+def test_get_letter_salutation(letter_salutation_generator, parsed_contact, expected_letter_salutation):
     result = letter_salutation_generator.get_letter_salutation(parsed_contact)
     assert result == expected_letter_salutation

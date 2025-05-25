@@ -1,62 +1,68 @@
 TITEL_METADATA = {
     # Akademische Titel
-    "Dr.": {"geschlecht": "unisex", "nationalitaet": "DE"},
-    "Prof.": {"geschlecht": "unisex", "nationalitaet": "DE"},
-    "Professor": {"geschlecht": "männlich", "nationalitaet": "DE"},
-    "Professorin": {"geschlecht": "weiblich", "nationalitaet": "DE"},
-    "Dipl.-Ing.": {"geschlecht": "unisex", "nationalitaet": "DE"},
-    "Dr.-Ing.": {"geschlecht": "unisex", "nationalitaet": "DE"},
-    "Dr. h.c. mult.": {"geschlecht": "unisex", "nationalitaet": "DE"},
-    "Dr. rer. nat.": {"geschlecht": "unisex", "nationalitaet": "DE"},
-    "Dr. med.": {"geschlecht": "unisex", "nationalitaet": "DE"},
-    "Dr. jur.": {"geschlecht": "unisex", "nationalitaet": "DE"},
-    "Dr. phil.": {"geschlecht": "unisex", "nationalitaet": "DE"},
-    "Dr. rer. pol.": {"geschlecht": "unisex", "nationalitaet": "DE"},
-    "Dr. theol.": {"geschlecht": "unisex", "nationalitaet": "DE"},
-    "Dr. paed.": {"geschlecht": "unisex", "nationalitaet": "DE"},
-    "Dr. habil.": {"geschlecht": "unisex", "nationalitaet": "DE"},
-    "Dr. rer. oec.": {"geschlecht": "unisex", "nationalitaet": "DE"},
-    "Dr. rer. soc.": {"geschlecht": "unisex", "nationalitaet": "DE"},
-    "Dr. h. c.": {"geschlecht": "unisex", "nationalitaet": "DE"},
-    "Dipl.-Kfm.": {"geschlecht": "unisex", "nationalitaet": "DE"},
-    "Dipl.-Volksw.": {"geschlecht": "unisex", "nationalitaet": "DE"},
-    "M.Sc.": {"geschlecht": "unisex", "nationalitaet": "DE"},
-    "B.Sc.": {"geschlecht": "unisex", "nationalitaet": "DE"},
+    "Professor": {"geschlecht": "männlich", "nationalitaet": "DE", "include_in_salutation": True},
+    "Professorin": {"geschlecht": "weiblich", "nationalitaet": "DE", "include_in_salutation": True},
+    "Prof.": {"geschlecht": "unisex", "nationalitaet": "DE", "include_in_salutation": False},  # In der Anrede nicht abgekürzt!
+    "Dr.": {"geschlecht": "unisex", "nationalitaet": "DE", "include_in_salutation": True},
+    "Dr.-Ing.": {"geschlecht": "unisex", "nationalitaet": "DE", "include_in_salutation": True},
+    "Dr. h.c. mult.": {"geschlecht": "unisex", "nationalitaet": "DE", "include_in_salutation": True},
+    "Dr. rer. nat.": {"geschlecht": "unisex", "nationalitaet": "DE", "include_in_salutation": True},
+    "Dr. med.": {"geschlecht": "unisex", "nationalitaet": "DE", "include_in_salutation": True},
+    "Dr. jur.": {"geschlecht": "unisex", "nationalitaet": "DE", "include_in_salutation": True},
+    "Dr. phil.": {"geschlecht": "unisex", "nationalitaet": "DE", "include_in_salutation": True},
+    "Dr. rer. pol.": {"geschlecht": "unisex", "nationalitaet": "DE", "include_in_salutation": True},
+    "Dr. theol.": {"geschlecht": "unisex", "nationalitaet": "DE", "include_in_salutation": True},
+    "Dr. paed.": {"geschlecht": "unisex", "nationalitaet": "DE", "include_in_salutation": True},
+    "Dr. habil.": {"geschlecht": "unisex", "nationalitaet": "DE", "include_in_salutation": True},
+    "Dr. rer. oec.": {"geschlecht": "unisex", "nationalitaet": "DE", "include_in_salutation": True},
+    "Dr. rer. soc.": {"geschlecht": "unisex", "nationalitaet": "DE", "include_in_salutation": True},
+    "Dr. h. c.": {"geschlecht": "unisex", "nationalitaet": "DE", "include_in_salutation": True},
+    "Dipl.-Ing.": {"geschlecht": "unisex", "nationalitaet": "DE", "include_in_salutation": False},
+    "Dipl.-Kfm.": {"geschlecht": "unisex", "nationalitaet": "DE", "include_in_salutation": False},
+    "Dipl.-Volksw.": {"geschlecht": "unisex", "nationalitaet": "DE", "include_in_salutation": False},
+    "M.Sc.": {"geschlecht": "unisex", "nationalitaet": "DE", "include_in_salutation": False},
+    "B.Sc.": {"geschlecht": "unisex", "nationalitaet": "DE", "include_in_salutation": False},
 
     # Adels-/Monarchentitel
-    "Kaiser": {"geschlecht": "männlich", "nationalitaet": "DE"},
-    "Kaiserin": {"geschlecht": "weiblich", "nationalitaet": "DE"},
-    "König": {"geschlecht": "männlich", "nationalitaet": "DE"},
-    "Königin": {"geschlecht": "weiblich", "nationalitaet": "DE"},
-    "Erzherzog": {"geschlecht": "männlich", "nationalitaet": "DE"},
-    "Erzherzogin": {"geschlecht": "weiblich", "nationalitaet": "DE"},
-    "Großherzog": {"geschlecht": "männlich", "nationalitaet": "DE"},
-    "Großherzogin": {"geschlecht": "weiblich", "nationalitaet": "DE"},
-    "Kurfürst": {"geschlecht": "männlich", "nationalitaet": "DE"},
-    "Kurfürstin": {"geschlecht": "weiblich", "nationalitaet": "DE"},
-    "Fürst": {"geschlecht": "männlich", "nationalitaet": "DE"},
-    "Fürstin": {"geschlecht": "weiblich", "nationalitaet": "DE"},
-    "Herzog": {"geschlecht": "männlich", "nationalitaet": "DE"},
-    "Herzogin": {"geschlecht": "weiblich", "nationalitaet": "DE"},
-    "Markgraf": {"geschlecht": "männlich", "nationalitaet": "DE"},
-    "Markgräfin": {"geschlecht": "weiblich", "nationalitaet": "DE"},
-    "Landgraf": {"geschlecht": "männlich", "nationalitaet": "DE"},
-    "Landgräfin": {"geschlecht": "weiblich", "nationalitaet": "DE"},
-    "Pfalzgraf": {"geschlecht": "männlich", "nationalitaet": "DE"},
-    "Pfalzgräfin": {"geschlecht": "weiblich", "nationalitaet": "DE"},
-    "Graf": {"geschlecht": "männlich", "nationalitaet": "DE"},
-    "Gräfin": {"geschlecht": "weiblich", "nationalitaet": "DE"},
-    "Freiherr": {"geschlecht": "männlich", "nationalitaet": "DE"},
-    "Freifrau": {"geschlecht": "weiblich", "nationalitaet": "DE"},
-    "Freifräulein": {"geschlecht": "weiblich", "nationalitaet": "DE"},
-    "Baron": {"geschlecht": "männlich", "nationalitaet": "DE"},
-    "Baronin": {"geschlecht": "weiblich", "nationalitaet": "DE"},
-    "Edler": {"geschlecht": "männlich", "nationalitaet": "DE"},
-    "Edle": {"geschlecht": "weiblich", "nationalitaet": "DE"},
-    "Prinz": {"geschlecht": "männlich", "nationalitaet": "DE"},
-    "Prinzessin": {"geschlecht": "weiblich", "nationalitaet": "DE"}, 
-    "Thronfolger": {"geschlecht": "männlich", "nationalitaet": "DE"},
-    "Thronfolgerin": {"geschlecht": "weiblich", "nationalitaet": "DE"}
+    "Kaiser": {"geschlecht": "männlich", "nationalitaet": "DE", "include_in_salutation": False},
+    "Kaiserin": {"geschlecht": "weiblich", "nationalitaet": "DE", "include_in_salutation": False},
+    "König": {"geschlecht": "männlich", "nationalitaet": "DE", "include_in_salutation": False},
+    "Königin": {"geschlecht": "weiblich", "nationalitaet": "DE", "include_in_salutation": False},
+    "Erzherzog": {"geschlecht": "männlich", "nationalitaet": "DE", "include_in_salutation": False},
+    "Erzherzogin": {"geschlecht": "weiblich", "nationalitaet": "DE", "include_in_salutation": False},
+    "Großherzog": {"geschlecht": "männlich", "nationalitaet": "DE", "include_in_salutation": False},
+    "Großherzogin": {"geschlecht": "weiblich", "nationalitaet": "DE", "include_in_salutation": False},
+    "Kurfürst": {"geschlecht": "männlich", "nationalitaet": "DE", "include_in_salutation": False},
+    "Kurfürstin": {"geschlecht": "weiblich", "nationalitaet": "DE", "include_in_salutation": False},
+    "Fürst": {"geschlecht": "männlich", "nationalitaet": "DE", "include_in_salutation": False},
+    "Fürstin": {"geschlecht": "weiblich", "nationalitaet": "DE", "include_in_salutation": False},
+    "Herzog": {"geschlecht": "männlich", "nationalitaet": "DE", "include_in_salutation": False},
+    "Herzogin": {"geschlecht": "weiblich", "nationalitaet": "DE", "include_in_salutation": False},
+    "Markgraf": {"geschlecht": "männlich", "nationalitaet": "DE", "include_in_salutation": False},
+    "Markgräfin": {"geschlecht": "weiblich", "nationalitaet": "DE", "include_in_salutation": False},
+    "Landgraf": {"geschlecht": "männlich", "nationalitaet": "DE", "include_in_salutation": False},
+    "Landgräfin": {"geschlecht": "weiblich", "nationalitaet": "DE", "include_in_salutation": False},
+    "Pfalzgraf": {"geschlecht": "männlich", "nationalitaet": "DE", "include_in_salutation": False},
+    "Pfalzgräfin": {"geschlecht": "weiblich", "nationalitaet": "DE", "include_in_salutation": False},
+    "Graf": {"geschlecht": "männlich", "nationalitaet": "DE", "include_in_salutation": True},
+    "Gräfin": {"geschlecht": "weiblich", "nationalitaet": "DE", "include_in_salutation": True},
+    "Freiherr": {"geschlecht": "männlich", "nationalitaet": "DE", "include_in_salutation": True},
+    "Freifrau": {"geschlecht": "weiblich", "nationalitaet": "DE", "include_in_salutation": True},
+    "Freifräulein": {"geschlecht": "weiblich", "nationalitaet": "DE", "include_in_salutation": True},
+    "Baron": {"geschlecht": "männlich", "nationalitaet": "DE", "include_in_salutation": True},
+    "Baronin": {"geschlecht": "weiblich", "nationalitaet": "DE", "include_in_salutation": True},
+    "Edler": {"geschlecht": "männlich", "nationalitaet": "DE", "include_in_salutation": True},
+    "Edle": {"geschlecht": "weiblich", "nationalitaet": "DE", "include_in_salutation": True},
+    "Prinz": {"geschlecht": "männlich", "nationalitaet": "DE", "include_in_salutation": False},
+    "Prinzessin": {"geschlecht": "weiblich", "nationalitaet": "DE", "include_in_salutation": False},
+    "Thronfolger": {"geschlecht": "männlich", "nationalitaet": "DE", "include_in_salutation": False},
+    "Thronfolgerin": {"geschlecht": "weiblich", "nationalitaet": "DE", "include_in_salutation": False}
+}
+
+NORMALIZED_TITLES = {
+    "prof.": "Professor",
+    "professor": "Professor",
+    "professorin": "Professorin"
 }
 
 SALUTATIONS = {
@@ -72,31 +78,34 @@ SALUTATIONS = {
     "Monsieur": {"geschlecht": "männlich", "nationalitaet": "FR"},
     "Señora": {"geschlecht": "weiblich", "nationalitaet": "ES"},
     "Señorita": {"geschlecht": "weiblich", "nationalitaet": "ES"},
-    "Señor": {"geschlecht": "männlich", "nationalitaet": "ES"},
+    "Señor": {"geschlecht": "männlich", "nationalitaet": "ES"}
 }
 
-LASTNAME_PREFIXES= {"von", "van", "de", "del", "di", "le", "la", "du"}
+LASTNAME_PREFIXES = {"von", "van", "de", "del", "di", "le", "la", "du"}
 
 SALUTATIONS_BY_LANGUAGE = {
     "DE": {
         "männlich": "Sehr geehrter Herr",
         "weiblich": "Sehr geehrte Frau",
         "divers": "Sehr geehrte Damen und Herren",
+        "default": "Sehr geehrte Damen und Herren"
     },
     "EN": {
         "männlich": "Dear Mr.",
         "weiblich": "Dear Ms.",
         "divers": "Dear Sir or Madam",
+        "default": "Dear Sir or Madam"
     },
     "FR": {
         "männlich": "Monsieur",
         "weiblich": "Madame",
         "divers": "Mesdames, Messieurs",
+        "default": "Mesdames, Messieurs"
     },
     "ES": {
         "männlich": "Estimado Señor",
         "weiblich": "Estimada Señora",
         "divers": "Estimados señores",
-    },
+        "default": "Estimados señores"
+    }
 }
-

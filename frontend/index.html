@@ -71,7 +71,14 @@
                         <option value="weiblich">Weiblich</option>
                     </select>
                 </div>
-
+                <div class="input-group mb-2">
+                    <label class="input-group-text" for="include_in_salutation">Titel in Briefanrede berücksichtigen?</label>
+                    <select class="form-select" id="include_in_salutation" name="include_in_salutation" required>
+                        <option value="" disabled selected hidden>Bitte auswählen...</option>
+                        <option value="True">Ja, Titel berücksichtigen</option>
+                        <option value="False">Nein, Titel weglassen</option>
+                    </select>
+                </div>
                 <div class="mb-3">
                     <button type="submit" class="btn btn-primary" name="action" value="add-title">Hinzufügen</button>
                 </div>

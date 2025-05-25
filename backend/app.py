@@ -14,7 +14,7 @@ app.secret_key = "super-secret-key"  # Für Flash-Messages
 # Hilfsobjekte
 title_manager = TitleManager()
 parser = ContactParser(title_manager)
-letter_generator = LetterSalutationGenerator()
+letter_generator = LetterSalutationGenerator(title_manager)
 contacts = []  # In-Memory-Speicherung
 
 @app.route("/", methods=["GET", "POST"])
@@ -25,13 +25,15 @@ def index():
         if action == "add-title":
             new_title = request.form.get("new-title", "").strip()
             gender = request.form.get("gender", "").strip()
+            include_in_salutation_str = request.form.get("include_in_salutation", "").strip()
+            include_in_salutation = include_in_salutation_str.lower() == "true"
 
             if not new_title or not gender:
                 flash("Bitte geben Sie sowohl Titel als auch Geschlecht an.", "danger")
             elif title_manager.is_known_title(new_title):
                 flash(f"Der Titel '{new_title}' ist bereits vorhanden.", "warning")
             else:
-                title_manager.add_title(new_title, gender)
+                title_manager.add_title(new_title, gender, include_in_salutation)
                 flash(f"Der Titel '{new_title}' wurde erfolgreich hinzugefügt.", "success")
 
         return redirect(url_for("index"))

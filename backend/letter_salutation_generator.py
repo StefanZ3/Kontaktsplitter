@@ -1,6 +1,10 @@
-from .constants import TITEL_METADATA, SALUTATIONS_BY_LANGUAGE
+from .constants import SALUTATIONS_BY_LANGUAGE, NORMALIZED_TITLES
+from .title_manager import TitleManager
 
 class LetterSalutationGenerator:
+    def __init__(self, title_manager: TitleManager):
+        self.title_manager: TitleManager = title_manager
+
     def get_letter_salutation(self, parsed_contact):
         """Generiert eine förmliche Briefanrede gemäß Etikette."""
 
@@ -10,8 +14,12 @@ class LetterSalutationGenerator:
         gender = parsed_contact.get("gender", "").lower()
         language = parsed_contact.get("language", "DE").upper()
 
-        # Titel vorbereiten
-        title_tokens = [t.strip() for t in raw_titles.replace(",", " ").split() if t.strip()]
+        # Titel vorbereiten mit Normalisierung (z. B. "prof." → "Professor")
+        title_tokens = [
+            NORMALIZED_TITLES.get(t.strip().lower(), t.strip())
+            for t in raw_titles.replace(",", " ").split() if t.strip()
+        ]
+
         highest_title = self.get_highest_title(title_tokens, gender)
 
         # Sonderfälle: Monarchen, Prinzen, Adelige mit Spezialanrede
@@ -24,7 +32,7 @@ class LetterSalutationGenerator:
             base = sal.get(gender, "Sehr geehrte Damen und Herren")
             return f"{base} {highest_title} {last_name},".strip()
 
-        # Standardanrede (Professor, Dr. etc.)
+        # Standardanrede (z. B. Professor, Dr.)
         salutation_prefix = SALUTATIONS_BY_LANGUAGE.get(language, SALUTATIONS_BY_LANGUAGE["DE"]).get(
             gender, "Sehr geehrte Damen und Herren"
         )
@@ -38,10 +46,7 @@ class LetterSalutationGenerator:
         return " ".join(p for p in parts if p).strip() + ","
 
     def get_highest_title(self, titles: list[str], gender: str) -> str:
-        """Bestimmt den höchsten relevanten Titel nach Etikette."""
-
-        # Titel, die in der Briefanrede NICHT erscheinen sollen
-        ignored_titles = {"M.Sc.", "B.Sc."}
+        """Bestimmt den höchsten relevanten Titel nach Etikette basierend auf Metadaten."""
 
         priority = [
             "König", "Königin",
@@ -51,11 +56,23 @@ class LetterSalutationGenerator:
             "Dr.", "Dr.-Ing.", "Dr. rer. nat.", "Dr. med."
         ]
 
+        # 1. Durchlauf: Priorisierte Titel
         for prio_title in priority:
             for t in titles:
-                if prio_title.lower() in t.lower() and t not in ignored_titles:
-                    if prio_title in ["Prof.", "Professor", "Professorin"]:
-                        return "Professorin" if gender == "weiblich" else "Professor"
+                if t == prio_title and prio_title in ["König", "Königin", "Prinz", "Prinzessin"]:
                     return prio_title
+
+                metadata = self.title_manager.get_title_metadata(t)
+                if metadata and metadata.get("include_in_salutation", False):
+                    if prio_title.lower() in t.lower():
+                        if prio_title in ["Prof.", "Professor", "Professorin"]:
+                            return "Professorin" if gender == "weiblich" else "Professor"
+                        return prio_title
+
+        # 2. Durchlauf: alle anderen Titel mit include_in_salutation = True
+        for t in titles:
+            metadata = self.title_manager.get_title_metadata(t)
+            if metadata and metadata.get("include_in_salutation", False):
+                return t  # z. B. "Ing."
 
         return ""
