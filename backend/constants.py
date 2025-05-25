@@ -109,3 +109,22 @@ SALUTATIONS_BY_LANGUAGE = {
         "default": "Estimados señores"
     }
 }
+
+ROYAL_SALUTATIONS = {
+    "DE": {
+        "Majestät": "Eure Majestät,",
+        "Königliche Hoheit": "Eure Königliche Hoheit,"
+    },
+    "EN": {
+        "Majestät": "Your Majesty,",
+        "Königliche Hoheit": "Your Royal Highness,"
+    },
+    "FR": {
+        "Majestät": "Votre Majesté,",
+        "Königliche Hoheit": "Votre Altesse Royale,"
+    },
+    "ES": {
+        "Majestät": "Su Majestad,",
+        "Königliche Hoheit": "Su Alteza Real,"
+    }
+}
