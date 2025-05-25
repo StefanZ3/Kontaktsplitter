@@ -57,21 +57,18 @@ class ContactParser:
             return "", []
         # Wenn die Liste einen Namen enthält, wird dieser als Nachname interpretiert
         if len(names) == 1:
-            return "", names[0]  # Ein-Wort-Name = Nachname
-
-        # Rückwärts durchgehen, um das erste Auftreten eines Nachnamen-Präfixes zu finden
+            return "", names[0]  # Ein-Wort-Name = Nachname   
+        # Rückwärts durchgehen und nach der letzten Präfix-Kette suchen
         last_name_start = len(names) - 1
-        for i in range(len(names) - 2, -1, -1):
-            if names[i].lower() in LASTNAME_PREFIXES:
-                last_name_start = i
+        for i in range(len(names) - 1, 0, -1):
+            if names[i - 1].lower() in LASTNAME_PREFIXES:
+                last_name_start = i - 1
+            elif last_name_start != len(names) - 1:
+                # Sobald ein Nicht-Präfix nach einem Präfix auftaucht, abbrechen
                 break
 
-        first_name_parts = names[:last_name_start]
-        last_name_parts = names[last_name_start:]
+        first_name = " ".join(names[:last_name_start])
+        last_name = " ".join(names[last_name_start:])
 
-        first_name = " ".join(first_name_parts)
-        last_name = " ".join(last_name_parts)
-        print(first_name)
-        print(last_name)
         return first_name, last_name
 

@@ -53,8 +53,6 @@ TITEL_METADATA = {
     "Baronin": {"geschlecht": "weiblich", "nationalitaet": "DE"},
     "Edler": {"geschlecht": "männlich", "nationalitaet": "DE"},
     "Edle": {"geschlecht": "weiblich", "nationalitaet": "DE"},
-    "Ritter": {"geschlecht": "männlich", "nationalitaet": "DE"},
-    "Junker": {"geschlecht": "männlich", "nationalitaet": "DE"},
     "Prinz": {"geschlecht": "männlich", "nationalitaet": "DE"},
     "Prinzessin": {"geschlecht": "weiblich", "nationalitaet": "DE"}, 
     "Thronfolger": {"geschlecht": "männlich", "nationalitaet": "DE"},

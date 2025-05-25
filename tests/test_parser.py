@@ -50,7 +50,9 @@ def test_get_titles(parser: ContactParser, input_contact: str, expected_return_c
         ("Peter Fischer", "Peter", "Fischer"),
         ("Antonius van Hoof", "Antonius", "van Hoof"),
         ("Marie Sophie van Hoof", "Marie Sophie", "van Hoof"),
-        ("Maximilian Friedrich Johann von und zu Hohenberg","Maximilian Friedrich Johann", "von und zu Hohenberg")
+        ("Maximilian Friedrich Johann von und zu Hohenberg","Maximilian Friedrich Johann", "von und zu Hohenberg"),
+        (" Lutz Alwin van der Horst ", "Lutz Alwin", "van der Horst"),
+        ("Hans Peter van de Berg","Hans Peter", "van de Berg")
     ],
 )
 def test_get_names(parser: ContactParser, contact_with_names: str, expected_first_name: str, expected_last_name: list[str]):
