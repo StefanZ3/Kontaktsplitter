@@ -1,8 +1,9 @@
 from flask import Flask, render_template, request, redirect, url_for, jsonify, flash
 from .title_manager import TitleManager
-# from .contact_parser import ContactParser
-from .parser2 import ContactParser
+from .contact_parser import ContactParser
 from .gender_detector import GenderDetector
+from .language_detector import LanguageDetector
+from .letter_salutation_generator import LetterSalutationGenerator
 import os
 
 template_dir = os.path.abspath(
@@ -16,6 +17,8 @@ app.secret_key = "super-secret-key"  # Für Flash-Messages
 title_manager = TitleManager()
 parser = ContactParser(title_manager)
 gender_detector = GenderDetector()
+language_detector = LanguageDetector()
+letter_generator = LetterSalutationGenerator()
 contacts = []  # In-Memory-Speicherung
 
 @app.route("/", methods=["GET", "POST"])
@@ -46,8 +49,8 @@ def split_new_contact():
         return jsonify({"error": "Leerer Kontakt"}), 400
     
     parsed = parser.parse(new_contact)
-    gender = gender_detector.get_gender(parsed)
-
+    parsed["gender"] = gender_detector.get_gender(parsed)
+    parsed["language"] = language_detector.get_language(parsed)
     return jsonify(parsed)
 
 @app.route("/save_contact", methods=["POST"])

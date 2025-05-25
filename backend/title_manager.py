@@ -7,7 +7,7 @@ class TitleManager:
     def add_title(self, new_title: str, gender: str = "0", nation: str = "DE"):
         if new_title not in self.titles:
             TITEL_METADATA[new_title] = {
-                "geschlecht": self.map_coder_to_gende(gender),
+                "geschlecht": gender,
                 "nationalitaet": nation
             }
             self.titles.append(new_title)
