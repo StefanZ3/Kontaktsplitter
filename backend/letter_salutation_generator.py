@@ -1,32 +1,66 @@
+from .constants import TITEL_METADATA, SALUTATIONS_BY_LANGUAGE
+
 class LetterSalutationGenerator:
     def get_letter_salutation(self, parsed_contact):
-        """Generiert die Briefanrede mithilfe Geschlecht, Titel und Namen."""
-        first_name = parsed_contact["first_name"]
-        last_name = parsed_contact["last_name"]
-        
-        titles = parsed_contact["titles"]
-        #titles = [t.strip() for t in parsed_contact["titles"].split(",") if t.strip()]
-        gender = parsed_contact["gender"]
+        """Generiert eine förmliche Briefanrede gemäß Etikette."""
 
-        if gender == "männlich":
-            first_part = "Sehr geehrter Herr"
-        elif gender == "weiblich":
-            first_part = "Sehr geehrte Frau"
+        first_name = parsed_contact.get("first_name", "").strip()
+        last_name = parsed_contact.get("last_name", "").strip()
+        raw_titles = parsed_contact.get("titles", "").strip()
+        gender = parsed_contact.get("gender", "").lower()
+        language = parsed_contact.get("language", "DE").upper()
+
+        # Titel vorbereiten
+        title_tokens = [t.strip() for t in raw_titles.replace(",", " ").split() if t.strip()]
+        highest_title = self.get_highest_title(title_tokens)
+
+        # Sonderfälle: Monarchen, Prinzen, Adelige mit Spezialanrede
+        if highest_title in ["König", "Königin"]:
+            return "Majestät,"
+        elif highest_title in ["Prinz", "Prinzessin"]:
+            return "Königliche Hoheit,"
+        elif highest_title in ["Graf", "Gräfin"]:
+            sal = SALUTATIONS_BY_LANGUAGE.get(language, SALUTATIONS_BY_LANGUAGE["DE"])
+            base = sal.get(gender, "Sehr geehrte Damen und Herren")
+            return f"{base} {highest_title} {last_name},".strip()
+
+        # Standardanrede (Professor, Dr. etc.)
+        salutation_prefix = SALUTATIONS_BY_LANGUAGE.get(language, SALUTATIONS_BY_LANGUAGE["DE"]).get(
+            gender, "Sehr geehrte Damen und Herren"
+        )
+
+        # Nur höchster akademischer Titel (Prof. > Dr.)
+        if highest_title == "Professor":
+            title_in_anrede = "Professor"
+        elif highest_title == "Dr.":
+            title_in_anrede = "Dr."
         else:
-            return "Sehr geehrte Damen und Herren"
+            title_in_anrede = ""
 
-        # Die Titel Doktor und Professor werden auf ihre Kurzform gebracht, die anderen werden übernommen
-        titles_for_letter_salutation = []
-        if titles:
-            for title in titles:
-                if "dr." in title.lower():
-                    title = "Dr."
-                elif "prof" in title.lower():
-                    title = "Prof."
-                titles_for_letter_salutation.append(title)
-        title_part = " ".join(titles_for_letter_salutation)
+        if gender not in ["männlich", "weiblich"]:
+            return salutation_prefix + ","
 
-        last_name_part = last_name
+        # Endgültige Anrede zusammensetzen
+        name_part = last_name
+        parts = [salutation_prefix, title_in_anrede, name_part]
+        return " ".join(p for p in parts if p).strip() + ","
 
-        letter_salutation = " ".join(part for part in [first_part, title_part, last_name_part] if part)
-        return letter_salutation
+    def get_highest_title(self, titles: list[str]) -> str:
+        """Bestimmt den höchsten relevanten Titel nach Etikette."""
+
+        priority = [
+            "König", "Königin",
+            "Prinz", "Prinzessin",
+            "Graf", "Gräfin",
+            "Professor", "Professorin", "Prof.",
+            "Dr.", "Dr.-Ing.", "Dr. rer. nat.", "Dr. med.",
+            "M.Sc.", "B.Sc."
+        ]
+
+        for prio_title in priority:
+            for t in titles:
+                if prio_title.lower() in t.lower():
+                    # Prof. soll ausgeschrieben werden
+                    return "Professor" if prio_title in ["Prof.", "Professorin"] else prio_title
+
+        return ""

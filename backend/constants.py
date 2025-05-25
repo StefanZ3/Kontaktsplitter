@@ -76,3 +76,27 @@ SALUTATIONS = {
 }
 
 LASTNAME_PREFIXES= {"von", "van", "de", "del", "di", "le", "la", "du"}
+
+SALUTATIONS_BY_LANGUAGE = {
+    "DE": {
+        "männlich": "Sehr geehrter Herr",
+        "weiblich": "Sehr geehrte Frau",
+        "divers": "Sehr geehrte Damen und Herren",
+    },
+    "EN": {
+        "männlich": "Dear Mr.",
+        "weiblich": "Dear Ms.",
+        "divers": "Dear Sir or Madam",
+    },
+    "FR": {
+        "männlich": "Monsieur",
+        "weiblich": "Madame",
+        "divers": "Mesdames, Messieurs",
+    },
+    "ES": {
+        "männlich": "Estimado Señor",
+        "weiblich": "Estimada Señora",
+        "divers": "Estimados señores",
+    },
+}
+

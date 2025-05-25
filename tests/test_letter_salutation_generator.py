@@ -1,7 +1,6 @@
 import pytest
 from backend.letter_salutation_generator import LetterSalutationGenerator
 
-
 @pytest.fixture
 def letter_salutation_generator():
     return LetterSalutationGenerator()
@@ -9,44 +8,121 @@ def letter_salutation_generator():
 @pytest.mark.parametrize(
     "parsed_contact, expected_letter_salutation",
     [
+        # Divers → neutrale Anrede, keine Titel
         ({
-            "salutation": "",
-            "titles": ["Professor", "Dr."],
+            "titles": "Professor Dr.",
             "first_name": "",
             "last_name": "Schmied",
-            "gender": "divers"
+            "gender": "divers",
+            "language": "DE"
         }, 
-        "Sehr geehrte Damen und Herren"),
+        "Sehr geehrte Damen und Herren,"),
+
+        # Professor → höchster Titel, ausgeschrieben
         ({
-            "salutation": "",
-            "titles": ["Professor", "Dr."],
+            "titles": "Professor Dr.",
             "first_name": "",
             "last_name": "Schmied",
-            "gender": "männlich"
+            "gender": "männlich",
+            "language": "DE"
         }, 
-        "Sehr geehrter Herr Prof. Dr. Schmied"),
+        "Sehr geehrter Herr Professor Schmied,"),
+
+        # Mehrere Dr.-Titel → nur ein "Dr." in Anrede
         ({
-            "salutation": "Frau",
-            "titles": ["Dr. h.c. mult.", "Dr. h.c. mult.", "Dr. rer. nat."],
+            "titles": "Dr. h.c. mult. Dr. h.c. mult. Dr. rer. nat.",
             "first_name": "",
             "last_name": "Schmied",
-            "gender": "weiblich"
+            "gender": "weiblich",
+            "language": "DE"
         }, 
-        "Sehr geehrte Frau Dr. Dr. Dr. Schmied"),
+        "Sehr geehrte Frau Dr. Schmied,"),
+
+        # Kein Titel, normaler Nachname
         ({
-            "salutation": "Herr",
-            "titles": [],
+            "titles": "",
             "first_name": "Miachel",
             "last_name": "van Gerwen",
-            "gender" : "männlich"
+            "gender": "männlich",
+            "language": "DE"
         }, 
-        "Sehr geehrter Herr van Gerwen"),
+        "Sehr geehrter Herr van Gerwen,"),
+
+        # König → spezielle Monarchen-Anrede
+        ({
+            "titles": "König",
+            "first_name": "Friedrich",
+            "last_name": "von Hohenberg",
+            "gender": "männlich",
+            "language": "DE"
+        },
+        "Majestät,"),
+
+        # Graf → ausgeschrieben, mit Herr
+        ({
+            "titles": "Graf",
+            "first_name": "Otto",
+            "last_name": "von Hohenberg",
+            "gender": "männlich",
+            "language": "DE"
+        },
+        "Sehr geehrter Herr Graf von Hohenberg,"),
+
+        # Prinz → Königliche Hoheit
+        ({
+            "titles": "Prinz",
+            "first_name": "Ludwig",
+            "last_name": "von Bayern",
+            "gender": "männlich",
+            "language": "DE"
+        },
+        "Königliche Hoheit,"),
+
+        # M.Sc. → wird ignoriert
+        ({
+            "titles": "M.Sc.",
+            "first_name": "Lisa",
+            "last_name": "Maier",
+            "gender": "weiblich",
+            "language": "DE"
+        },
+        "Sehr geehrte Frau Maier,"),
+
+        # Englische Anrede, Professor
+        ({
+            "titles": "Prof. Dr.",
+            "first_name": "Alice",
+            "last_name": "Johnson",
+            "gender": "weiblich",
+            "language": "EN"
+        },
+        "Dear Ms. Professor Johnson,"),
+
+        # Französische Anrede, kein Titel
+        ({
+            "titles": "",
+            "first_name": "Jean",
+            "last_name": "Dupont",
+            "gender": "männlich",
+            "language": "FR"
+        },
+        "Monsieur Dupont,"),
+
+        # Spanische Anrede, divers
+        ({
+            "titles": "",
+            "first_name": "",
+            "last_name": "Martinez",
+            "gender": "divers",
+            "language": "ES"
+        },
+        "Estimados señores,"),
     ],
 )
 def test_get_letter_salutation(
     letter_salutation_generator: LetterSalutationGenerator,
     parsed_contact: dict,
-    expected_letter_salutation
+    expected_letter_salutation: str
 ):
-    letter_salutation = letter_salutation_generator.get_letter_salutation(parsed_contact)
-    assert letter_salutation == expected_letter_salutation
+    result = letter_salutation_generator.get_letter_salutation(parsed_contact)
+    assert result == expected_letter_salutation
