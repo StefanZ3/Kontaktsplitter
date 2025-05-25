@@ -1,5 +1,5 @@
 from .title_manager import TitleManager
-from .constants import SALUTATIONS
+from .constants import SALUTATIONS, LASTNAME_PREFIXES
 from typing import Tuple
 
 
@@ -36,7 +36,7 @@ class ContactParser:
                 input_contact = input_contact.replace(title, "")
         return input_contact.strip(), titles
 
-    def get_names(self, contact_with_names: str) -> Tuple[str, list[str]]:
+    def old_get_names(self, contact_with_names: str) -> Tuple[str, list[str]]:
         names = contact_with_names.split()
         # Wenn die Liste leer ist, sind keine Namen enthalten
         if not names:
@@ -49,3 +49,29 @@ class ContactParser:
             first_name = names[0]
             last_name = names[1:]
             return first_name, last_name
+        
+    def get_names(self, contact_with_names: str) -> Tuple[str, str]:
+        names = contact_with_names.strip().split()
+        # Wenn die Liste leer ist, sind keine Namen enthalten
+        if not names:
+            return "", []
+        # Wenn die Liste einen Namen enthält, wird dieser als Nachname interpretiert
+        if len(names) == 1:
+            return "", names[0]  # Ein-Wort-Name = Nachname
+
+        # Rückwärts durchgehen, um das erste Auftreten eines Nachnamen-Präfixes zu finden
+        last_name_start = len(names) - 1
+        for i in range(len(names) - 2, -1, -1):
+            if names[i].lower() in LASTNAME_PREFIXES:
+                last_name_start = i
+                break
+
+        first_name_parts = names[:last_name_start]
+        last_name_parts = names[last_name_start:]
+
+        first_name = " ".join(first_name_parts)
+        last_name = " ".join(last_name_parts)
+        print(first_name)
+        print(last_name)
+        return first_name, last_name
+

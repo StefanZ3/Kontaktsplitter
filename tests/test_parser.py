@@ -46,9 +46,11 @@ def test_get_titles(parser: ContactParser, input_contact: str, expected_return_c
 @pytest.mark.parametrize(
     "contact_with_names, expected_first_name, expected_last_name",
     [
-        ("Kleinert", "", ["Kleinert"]),
-        ("Peter Fischer", "Peter", ["Fischer"]),
-        ("Antonius van Hoof", "Antonius", ["van", "Hoof"]),
+        ("Kleinert", "", "Kleinert"),
+        ("Peter Fischer", "Peter", "Fischer"),
+        ("Antonius van Hoof", "Antonius", "van Hoof"),
+        ("Marie Sophie van Hoof", "Marie Sophie", "van Hoof"),
+        ("Maximilian Friedrich Johann von und zu Hohenberg","Maximilian Friedrich Johann", "von und zu Hohenberg")
     ],
 )
 def test_get_names(parser: ContactParser, contact_with_names: str, expected_first_name: str, expected_last_name: list[str]):
