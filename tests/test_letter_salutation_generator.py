@@ -61,7 +61,7 @@ def letter_salutation_generator(title_manager):
             "gender": "männlich",
             "language": "DE"
         },
-        "Majestät,"),
+        "Eure Majestät,"),
 
         # Graf → ausgeschrieben, mit Herr
         ({
@@ -81,7 +81,7 @@ def letter_salutation_generator(title_manager):
             "gender": "männlich",
             "language": "DE"
         },
-        "Königliche Hoheit,"),
+        "Eure Königliche Hoheit,"),
 
         # M.Sc. → wird ignoriert
         ({

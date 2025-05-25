@@ -1,4 +1,4 @@
-from .constants import SALUTATIONS_BY_LANGUAGE, NORMALIZED_TITLES
+from .constants import SALUTATIONS_BY_LANGUAGE, NORMALIZED_TITLES, ROYAL_SALUTATIONS
 from .title_manager import TitleManager
 
 class LetterSalutationGenerator:
@@ -24,9 +24,9 @@ class LetterSalutationGenerator:
 
         # Sonderfälle: Monarchen, Prinzen, Adelige mit Spezialanrede
         if highest_title in ["König", "Königin"]:
-            return "Majestät,"
+            return ROYAL_SALUTATIONS.get(language, ROYAL_SALUTATIONS["DE"])["Majestät"]
         elif highest_title in ["Prinz", "Prinzessin"]:
-            return "Königliche Hoheit,"
+            return ROYAL_SALUTATIONS.get(language, ROYAL_SALUTATIONS["DE"])["Königliche Hoheit"]
         elif highest_title in ["Graf", "Gräfin"]:
             sal = SALUTATIONS_BY_LANGUAGE.get(language, SALUTATIONS_BY_LANGUAGE["DE"])
             base = sal.get(gender, "Sehr geehrte Damen und Herren")
