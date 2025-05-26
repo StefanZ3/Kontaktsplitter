@@ -8,6 +8,7 @@ template_dir = os.path.abspath(
     os.path.join(os.path.dirname(__file__), "..", "frontend")
 )
 
+# Initialisiert die Flask-App
 app = Flask(__name__, template_folder=template_dir)
 app.secret_key = "super-secret-key"  # Für Flash-Messages
 
@@ -15,10 +16,15 @@ app.secret_key = "super-secret-key"  # Für Flash-Messages
 title_manager = TitleManager()
 parser = ContactParser(title_manager)
 letter_generator = LetterSalutationGenerator(title_manager)
-contacts = []  # In-Memory-Speicherung
+
+# In-Memory-Speicherung der Kontakte (nicht persistent)
+contacts = []
 
 @app.route("/", methods=["GET", "POST"])
 def index():
+    """Startseite der App. Zeigt die Titel und bestehenden Kontakte an.
+    Verarbeitet außerdem das Hinzufügen neuer Titel über ein Formular."""
+
     if request.method == "POST":
         action = request.form.get("action", "").strip()
 
@@ -46,6 +52,10 @@ def index():
 
 @app.route("/split", methods=["POST"])
 def split_new_contact():
+    """API-Endpunkt zum Parsen eines neuen Kontakts.
+    Erwartet JSON mit dem Schlüssel "new_contact".
+    Gibt geparste Kontaktinformationen zurück."""
+
     data = request.get_json()
     new_contact = data.get("new_contact", "").strip()
 
@@ -57,6 +67,10 @@ def split_new_contact():
 
 @app.route("/save_contact", methods=["POST"])
 def save_contact():
+    """API-Endpunkt zum Speichern eines Kontakts.
+    Erwartet JSON-Daten mit Kontaktinformationen.
+    Fügt den Kontakt der In-Memory-Liste hinzu und gibt eine Erfolgsmeldung zurück."""
+
     data = request.get_json()
     contacts.append(data)
     flash("Kontakt erfolgreich hinzugefügt.", "success")
@@ -65,6 +79,8 @@ def save_contact():
 
 @app.route("/briefanrede/<int:index>")
 def briefanrede(index):
+    """Gibt eine Briefanrede für den Kontakt mit dem angegebenen Index zurück."""
+
     try:
         contact = contacts[index]
     except IndexError:
