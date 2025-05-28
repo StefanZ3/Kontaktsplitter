@@ -31,18 +31,28 @@ Es wurde im Rahmen der Vorlesung „Softwarequalität“ an der DHBW Stuttgart C
    ```bash
    cd Kontaktsplitter
    ```
+3. Virtuelle Umgebung (Windows)(empfohlen)
 
-3. Abhängigkeiten installieren:
+   Virtuelle Umgebung anlegen:
+   ```bash
+   python -m venv venv
+   ```
+   Virtuelle Umgebung starten:
+   ```bash
+   .venv\Scripts\activate
+    ```
+
+4. Abhängigkeiten installieren:
    ```bash
    pip install -r requirements.txt
    ```
 
-3. Anwendung starten:
+5. Anwendung starten:
    ```bash
    python -m backend.app
    ```
 
-4. Im Browser öffnen:
+6. Im Browser öffnen:
    [http://127.0.0.1:5000](http://127.0.0.1:5000)
 
 
