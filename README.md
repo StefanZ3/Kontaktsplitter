@@ -20,6 +20,7 @@ Dieses Prototyp wurde vom Team *SplitForce* im Rahmen der Vorlesung *„Software
 ### Voraussetzungen
 - Python 3.10+
 - Pip
+- Git
 
 ### Schritte
 1. Repo klonen:
