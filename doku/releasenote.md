@@ -81,3 +81,5 @@
 
 - `Flask` – Backend Web Framework
 - `pytest` – Unit Testing Framework
+- `gender-guesser` – zur automatischen Geschlechtserkennung basierend auf Vornamen
+- `requests` – HTTP-Client für API-Aufrufe oder Webzugriffe (optional verwendet)
