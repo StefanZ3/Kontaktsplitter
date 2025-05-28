@@ -30,7 +30,4 @@
 
 ## 4. Dokumentation
 
-- **Testplan** mit Teststrategie und Fallauswahl
-- **Testprotokoll** mit durchgeführten Tests und Ergebnissen
-- **Abschlussbericht** mit Bewertung der Testabdeckung, bekannten Einschränkungen und offenen Punkten
 - **Releasenote** mit Liste umgesetzter Features und bekannter Einschränkungen
