@@ -13,7 +13,7 @@ Der Kontaktsplitter ist ein Web-Prototyp zur Zerlegung von Kontaktangaben (z. 
 
 Das Tool unterstützt auch manuelle Nachbearbeitung und das dynamische Hinzufügen von Titeln.
 
-Es wurde im Rahmen der Vorlesung „Softwarequalität“ an der DHBW Stuttgart Campus Horb entwickelt.
+Dieses Prototyp wurde vom Team *SplitForce* im Rahmen der Vorlesung *„Softwarequalität“* an der DHBW Stuttgart Campus Horb entwickelt.
 
 ## Installation & Ausführung
 

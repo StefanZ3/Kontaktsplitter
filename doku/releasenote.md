@@ -83,3 +83,8 @@
 - `pytest` – Unit Testing Framework
 - `gender-guesser` – zur automatischen Geschlechtserkennung basierend auf Vornamen
 - `requests` – HTTP-Client für API-Aufrufe oder Webzugriffe (optional verwendet)
+
+---
+
+**Hinweis:** 
+Dieser Prototyp wurde vom Team *SplitForce* im Rahmen der Vorlesung *„Softwarequalität“* an der DHBW Stuttgart Campus Horb entwickelt.
