@@ -7,7 +7,7 @@
   - Titel (inkl. Mehrfachtitel, akademische Titel und Adelstitel)
   - Vorname
   - Nachname
-  - Geschlecht (basierend auf Anrede oder Vornamen)
+  - Geschlecht (basierend auf Anrede, Titel und Vornamen)
   - Sprache (basierend auf Anrede, z. B. „Mme.“, „Mrs.“ etc.)
 - Generierung einer vollständigen Briefanrede gemäß den Empfehlungen des Dudens und des Bundesinnenministeriums, z. B.:  
   `Sehr geehrte Frau Professorin von Leuthäuser-Schnarrenberger`
@@ -44,7 +44,7 @@
    ```
    Virtuelle Umgebung starten:
    ```bash
-   .venv\Scripts\activate
+   .\venv\Scripts\activate
     ```
 
 4. Abhängigkeiten installieren:

@@ -39,7 +39,7 @@ Es wurde im Rahmen der Vorlesung „Softwarequalität“ an der DHBW Stuttgart C
    ```
    Virtuelle Umgebung starten:
    ```bash
-   .venv\Scripts\activate
+   .\venv\Scripts\activate
     ```
 
 4. Abhängigkeiten installieren:
