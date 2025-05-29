@@ -32,16 +32,36 @@ Dieses Prototyp wurde vom Team *SplitForce* im Rahmen der Vorlesung *„Software
    ```bash
    cd Kontaktsplitter
    ```
+
 3. Virtuelle Umgebung (Windows)(empfohlen)
+
+   **Wichtig bei PowerShell-Fehlermeldung:**  
+   Falls beim Ausführen der virtuellen Umgebung eine Fehlermeldung wie  
+   *„Die Ausführung von Skripten ist auf diesem System deaktiviert“* erscheint, muss die Ausführungsrichtlinie geändert werden. Führe dazu vor dem Aktivieren der Umgebung einen der folgenden Befehle aus. Je nach System können Administratorrechte erforderlich sein::
+
+   - **Nur für die aktuelle PowerShell-Session:**
+     ```powershell
+     Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope Process
+     ```
+   - **Für den aktuellen Benutzer dauerhaft:**
+     ```powershell
+     Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
+     ```
 
    Virtuelle Umgebung anlegen:
    ```bash
    python -m venv venv
    ```
+
+   > Hinweis: Unter Windows kann es nötig sein, statt `python` den Befehl `py` zu verwenden, wenn python nicht in der Systeemvariable `PATH` steht:
+   > ```bash
+   > py -m venv venv
+   > ```
+
    Virtuelle Umgebung starten:
    ```bash
    .\venv\Scripts\activate
-    ```
+   ```
 
 4. Abhängigkeiten installieren:
    ```bash
@@ -52,6 +72,11 @@ Dieses Prototyp wurde vom Team *SplitForce* im Rahmen der Vorlesung *„Software
    ```bash
    python -m backend.app
    ```
+   > Hinweis: Unter Windows kann es nötig sein, statt `python` den Befehl `py` zu verwenden, wenn python nicht in der Systeemvariable `PATH` steht:
+   > ```bash
+   > py -m backend.app
+   > ```
+
 
 6. Im Browser öffnen:
    [http://127.0.0.1:5000](http://127.0.0.1:5000)
